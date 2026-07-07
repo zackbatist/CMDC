@@ -2,18 +2,21 @@
 title: "Canadian Metaresearch Data Challenge"
 ---
 
-This is the submission for the [Canadian Metaresearch Data Challenge](https://carn-recar.ca/2nd-canadian-open-science-conference-call-for-proposal-canadian-metaresearch-data-challenge/), part of the 2nd Canadian Open Science Conference (University of Ottawa, October 27–29, 2026). The call asks for a methodology to construct an open, reproducible, and inclusive dataset capturing the Canadian metaresearch landscape. Selected teams receive up to CAD $4,000 to implement the proposed methodology and present findings at the conference.
+This is a submission for the [Canadian Metaresearch Data Challenge](https://carn-recar.ca/2nd-canadian-open-science-conference-call-for-proposal-canadian-metaresearch-data-challenge/), part of the 2nd Canadian Open Science Conference (University of Ottawa, October 27–29, 2026). The call asks for a methodology to construct an open, reproducible, and inclusive dataset capturing the Canadian metaresearch landscape.
 
-The **[proposal](proposal.qmd)** is a directory of Canadian metaresearchers, structured around people, the institutions they're affiliated with, and the initiatives they contribute to — built to highlight the field's actual diversity. The database is built up from a variety of scholarly and para-scholarly resources, including scientific papers, scholarly metadata, social media profiles, and content scraped from faculty webpages. Records are organized using established typologies and self-described tags.
+My **[proposal](proposal.qmd)** is a directory of Canadian metaresearchers, structured around people, the institutions they're affiliated with, and the initiatives they contribute to — built to highlight the field's actual diversity. The database is built up from a variety of scholarly and para-scholarly resources, including scientific papers, scholarly metadata, social media profiles, and content scraped from faculty webpages. Records are organized using established typologies and self-described tags.
+
+## Outcomes and implications
+
+What can this dataset do?
+
+## About the maintainer
+
+## About this site
+
 
 The **[data model](data-model.qmd)** page lays out how the directory is structured: one JSON record per person, institution, and initiative, cross-referenced by ID. The **[pipeline](pipeline.qmd)** page traces how the four sources actually flow into those files. The **[data sources](data-sources.qmd)** page describes each source and tool used in the pipeline — Google Scholar, OpenAlex, Publish or Perish, Crossref, ORCID — on its own terms. The **rendering** page shows the processes involved in visually representing the information and producing data that can be fed into analytical protocols.
 
 The **[work plan detail](workplan.qmd)** page gives the full phase-by-phase breakdown behind the proposal's compressed timeline paragraph.
 
 The entire project is in the public domain under a CC0 license. The text and code can be reviewed at [github.com/zackbatist/CMDC](https://github.com/zackbatist/CMDC).
-
----
-
-Outcomes and implications. What can this dataset do?
-
-About the maintainer
