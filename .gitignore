@@ -1,0 +1,49 @@
+# Quarto
+_site/
+.quarto/
+/.quarto/
+**/*.quarto_ipynb
+*_files/
+
+# R
+.Rhistory
+.RData
+.Rproj.user/
+*.rds
+*.RData
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+.env
+*.egg-info/
+
+# Data
+*.csv
+*.tsv
+*.json
+*.bib
+
+# Secrets
+.env
+*.key
+*.pem
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Dropbox
+*conflicted copy*
+* (1).*
+
+# LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+
+# Excludes

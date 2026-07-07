@@ -1,0 +1,45 @@
+project:
+  type: website
+  output-dir: _site
+  preview:
+    port: 7777
+    browser: false
+
+website:
+  title: "Canadian Metaresearch Data Challenge"
+  description: "A directory of Canadian metaresearchers, showcasing the field's diversity."
+  navbar:
+    left:
+      - href: index.qmd
+        text: Overview
+      - href: proposal.qmd
+        text: Proposal
+      - href: data-model.qmd
+        text: Data Model
+      - href: pipeline.qmd
+        text: Pipeline
+      - href: workplan.qmd
+        text: Work Plan Detail
+      - href: data-sources.qmd
+        text: Data Sources
+  page-footer:
+    left: ""
+    right: ""
+  site-url: https://zackbatist.info/CMDC/
+  repo-url: https://github.com/zackbatist/CMDC
+  repo-actions: none
+  bread-crumbs: true
+  page-navigation: false
+  back-to-top-navigation: false
+  search: false
+
+bibliography: references.bib
+csl: assets/chicago-author-date.csl
+lang: en-CA
+
+format:
+  html:
+    theme: cosmo
+    css: assets/styles.css
+    toc: false
+    number-sections: false

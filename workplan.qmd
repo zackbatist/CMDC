@@ -1,0 +1,57 @@
+---
+title: "Work plan detail"
+---
+
+Assuming notification on August 1, 2026 against an October 27–29, 2026 conference date, roughly twelve weeks are available. This is the fuller phase breakdown behind the compressed paragraph in the proposal.
+
+Note that the author already has extensive experience scraping and extracting structured information from scholarly metadata, full texts of research outputs, and unstructured text from faculty web pages. Much of the data retrieval and processing pipeline is derived from his similar work on [open-archaeo.info](https://open-archaeo.info/) and the [BibVik](https://zackbatist.info/BibVik/) project.
+
+## Weeks 1–3 — retrieval and sampling frame
+
+Publish inclusion and exclusion criteria as a standalone, dated document before running the main query — which venues, disciplines, career stages, and institutional types count as "in scope" — so the boundary isn't fitted after the fact to whatever the query happens to return.
+
+Run the primary Google Scholar query and retrieve records via Publish or Perish, batching queries and building in retry/checkpointing to work around PoP's rate-limit and session-based access constraints.
+
+Cross-check against the OpenAlex API (institution-based: Canadian institution IDs; content-based: Canada-related affiliation and geographic terms) to backfill missing metadata and provide a second, independently-sourced disambiguation signal — not as the primary sampling frame.
+
+Crossref enrichment for missing author/affiliation metadata where Scholar-derived records are incomplete.
+
+## Weeks 3–5 — disambiguation and restructuring
+
+Collapse paper-centred records into researcher-centred records using OpenAlex author IDs and ORCID, where available, as cross-checking identifiers for ambiguous name strings.
+
+Where disambiguation is uncertain, apply a documented manual-review procedure on a sampled subset, and report the estimated disambiguation error rate rather than presenting merged records as ground truth.
+
+## Weeks 5–8 — two enrichment layers, built in parallel
+
+Self-described layer: extract self-described research interests from ORCID biographies and academic/social media profiles that researchers have themselves linked from ORCID or an institutional page. No probabilistic cross-platform name matching.
+
+Institutional history: reconstruct each person's affiliations over time using OpenAlex institution IDs linked to author records, so the directory can support institution-to-people traversal, not just person-level lookup.
+
+Initiative relationships: identify community infrastructure projects, working groups, or collaborative platforms a person contributes to, where publicly documented (project websites, acknowledgements, contributor lists). Necessarily less complete than the person and institution layers.
+
+Tag layer: LLM- or ML-based keyword and context extraction from abstracts and, where licensing permits, full text. Check access/rights before extraction, since full-text scraping raises its own openness questions if the resulting dataset can't legally be shared.
+
+Kept as distinct fields throughout — never merged into a single profile.
+
+## Weeks 8–10 — topic modeling, calibration, validation
+
+Topic modeling over the algorithmic keyword layer, calibrated against an existing published typology of metascience (Rubin's six types) rather than left as unlabeled clusters.
+
+Coverage check against known reference lists (CARN/RECAR membership, related Canadian research-integrity and open-science networks) to estimate recall.
+
+Precision check via manual review of a random sample to estimate the false-positive rate in the "Canadian metaresearcher" classification.
+
+Compile the dated "known gaps" register — specific populations or traditions the dataset is likely under-representing, and why.
+
+## Weeks 10–12 — documentation, packaging, presentation
+
+Finalize the open dataset release, with raw scraped contact information (e.g. email addresses) excluded from the public release — used only internally for disambiguation.
+
+Write up methodology documentation sufficient for independent reproduction; finalize the code repository.
+
+Prepare the thirty-minute plenary presentation.
+
+## Explicit future work
+
+Initiative-level data — funding relationships, infrastructure projects, community organizations — is named directly as future work, not folded into the October deliverable.

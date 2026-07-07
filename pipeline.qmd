@@ -1,0 +1,17 @@
+---
+title: "Retrieval and processing pipeline"
+---
+
+The sources described in [data sources](data-sources.qmd) don't map one-to-one onto the files described in [the data model](data-model.qmd) — each source feeds a different stage of processing, and several stages draw on more than one source at once. This page traces that path: what comes in, what happens to it, and which file it ends up in.
+
+## From sources to entries
+
+Google Scholar, retrieved via Publish or Perish, is where the bulk of publication records come from, chosen for its reach into grey literature and non-mainstream venues. OpenAlex is queried in parallel, not to replace Scholar but to backfill metadata and, more importantly, to supply the author and institution identifiers that make disambiguation and affiliation-history tracking possible at all — Scholar's own records are just name strings. Crossref fills in whatever metadata gaps remain in Scholar-derived records once OpenAlex has been checked. ORCID sits apart from the other three: it isn't used for retrieving publications at all, only for pulling in a person's own biography and any academic or social profiles they've linked themselves.
+
+Retrieval and disambiguation is the first processing stage, and it's where records stop being about publications and start being about people: Scholar, OpenAlex, and Crossref records for the same person get folded into a single entry, using OpenAlex and ORCID identifiers to resolve which name strings actually refer to the same individual. This is also where a person's affiliation history gets reconstructed — OpenAlex's institution IDs, linked to author records over time, are what let the pipeline say not just "this person is at this institution" but "this person was at this institution from this date to that date."
+
+Self-description runs as a separate track entirely, off to the side of the publication-retrieval work. It only draws on ORCID biographies and on academic or social profiles a person has linked from ORCID themselves — nothing from Scholar, OpenAlex, or Crossref touches this field, which is what keeps it a genuinely independent account of how someone describes their own work rather than a summary of their publication record.
+
+Tag application happens after disambiguation, working on the now-person-centred publication records, applying the Rubin typology vocabulary either through algorithmic extraction from abstracts and full text or through manual review, with the method recorded either way.
+
+Initiative linking is the least automatable stage: it depends on whatever public documentation an initiative happens to provide — a contributor list, an acknowledgements section, a project website — matched against the people already in the directory. It runs last because it needs the person layer to already exist before it has anyone to link initiatives to.

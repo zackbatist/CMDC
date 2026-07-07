@@ -1,0 +1,29 @@
+---
+title: "Data sources"
+---
+
+## Google Scholar
+
+Google Scholar indexes an unusually broad range of material relative to curated bibliographic databases — journal articles, but also theses, conference proceedings, preprints, institutional repository items, and grey literature that formal indexes often exclude. It has no public API; there is no formal contract for automated access, and Google has no obligation to keep the interface or its underlying ranking stable. Retrieval for this project goes through Publish or Perish (see below) rather than direct scraping, but the underlying access model is still the Scholar web interface, with the rate limits and CAPTCHA challenges that come with that.
+
+Scholar does not assign stable identifiers to authors or institutions. Records come back as name strings, which means disambiguation (is this "J. Smith" the same J. Smith as three records over) has to be handled downstream, either through cross-referencing against ORCID/OpenAlex or through manual review.
+
+## OpenAlex
+
+OpenAlex is a large, open bibliographic database maintained by OurResearch, built as a successor to Microsoft Academic Graph. It's accessed through a documented, versioned REST API — no scraping, no rate-limit brinkmanship, results returned as structured JSON. It assigns persistent IDs to works, authors, institutions, and concepts, and it's the source explicitly named (as a suggestion, not a requirement) in the call for this challenge.
+
+Those IDs make some engineering steps easier, but they're not error-free: author and institution disambiguation in OpenAlex has known, documented mistakes, and its topic/concept classification has changed structure across versions in ways that make it a less stable basis for longitudinal or reproducible classification than it looks at first glance. Coverage also varies by field and region — it does not close the long-tail gap that Scholar's breadth partially fills.
+
+For this project, OpenAlex is used as a structured cross-check and metadata-backfill layer alongside the primary Scholar-based retrieval — its IDs are useful for disambiguation, with the caveat above stated plainly rather than assumed away.
+
+## Crossref
+
+Crossref is the DOI registration agency for scholarly publishing, and its metadata API is used here as an enrichment layer — filling in author names, affiliations, and other metadata gaps in records retrieved primarily from Scholar. It's a well-established, documented API with broad coverage of DOI-registered content, though (like any source relying on publisher-submitted metadata) completeness and accuracy vary by publisher and venue.
+
+## ORCID
+
+ORCID provides persistent, researcher-controlled identifiers along with self-maintained biographical and affiliation information. It's used here for two purposes: as a disambiguation cross-check alongside OpenAlex author IDs, and as one of the sources for the self-described research-interest layer, where a researcher has populated their ORCID biography themselves. Coverage depends entirely on whether a given researcher has an ORCID and keeps it updated — it's a high-trust, low-coverage source relative to Scholar or OpenAlex.
+
+## Social media profiles
+
+## Faculty and project websites

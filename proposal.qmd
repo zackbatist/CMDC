@@ -1,0 +1,63 @@
+---
+title: "A Directory of Canadian Metaresearchers"
+subtitle: "Canadian Metaresearch Data Challenge — 2nd Canadian Open Science Conference"
+author:
+  - name: Zachary Batist
+    id: zb
+    email: zachary.batist@mcgill.ca
+    url: https://zackbatist.info
+    orcid: 0000-0003-0435-508X
+    corresponding: true
+    affiliations:
+      - name: McGill University
+        department: Epidemiology, Biostatistics and Occupational Health
+        city: Montreal
+        region: Québec
+        country: Canada
+bibliography: references.bib
+filters:
+  - assets/count-para.lua
+format:
+  html:
+    theme: cosmo
+    css: assets/styles.css
+    toc: false
+    number-sections: false
+  pdf:
+      documentclass: article
+      geometry: margin=1in
+      fontsize: 11pt
+      toc: false
+---
+
+Metaresearch in Canada has no single institutional home. It is practiced under a range of different banners — metascience, scientometrics, science and technology studies, research integrity, scholarly communication, open science — by people situated across universities, libraries, granting agencies, and independent community infrastructure projects, each with their own disciplinary training, professional incentives, and working assumptions about what counts as legitimate evidence. This fragmentation is not just an inconvenience for anyone trying to survey the field; it actively shapes what gets recognized as metaresearch at all. A researcher publishing bibliometric analyses in a well-indexed journal and a research data manager documenting institutional data governance practices in a technical report may be doing recognizably related work without either being aware of the other, without shared venues to encounter each other's output, and without a common vocabulary to describe what they have in common. This project builds a directory of the people who make up this landscape, deliberately structured to reveal its actual diversity rather than whatever subset happens to be easiest to find through a single database or a single disciplinary lens.
+
+## A directory of people, institutions, and initiatives, not a list of names
+
+The value of a directory like this comes from the relationships it can hold, not just the entries it contains. A flat list of names and self-descriptions would already be useful, but it would flatten exactly the structure that makes metaresearch in Canada worth mapping in the first place: who works where, who has moved between institutions, which people are contributing to the same initiatives or infrastructure projects without necessarily co-authoring anything together, and which disciplinary communities remain isolated from one another despite working on adjacent problems. The dataset is therefore built around three linked entities — people, institutions, and initiatives — with each person's record connected to the institutions they have been affiliated with over time and, where identifiable, the community infrastructure projects, working groups, or initiatives they contribute to. This relational structure is what lets the directory support real exploration: following a person to their institution and from there to who else is affiliated with it, or following an initiative to everyone who has contributed to it regardless of whether that contribution took the form of a citable publication.
+
+Each person's record includes their published outputs, their own self-described research interests, and their institutional and disciplinary context over time. Self-description and published output are kept as genuinely distinct fields rather than collapsed into a single profile, because the two capture different things: a person's own account of what they work on, and what a bibliometric record shows they have actually published. Where these diverge — a person who identifies as doing STS work but whose publications get algorithmically tagged as scientometrics, for instance — that divergence is preserved rather than resolved in favour of one or the other, since it says something real about the limits of treating publication metadata as equivalent to disciplinary identity. Entries are tagged using an existing published typology of metascience [@rubin2026sixtypes], adapted as a shared vocabulary across the directory so that people working under different institutional banners can still be found under a common set of terms.
+
+The deliverable is an openly licensed dataset, structured to preserve these relationships, released alongside a public code repository and a dated register naming the specific populations, disciplinary traditions, and institutional contexts the directory is known to under-represent.
+
+## Building the directory
+
+Because the aim is to find people rather than to analyze a fixed corpus of publications, retrieval is built to prioritize coverage over precision. The primary source is Google Scholar, retrieved via Publish or Perish, chosen for its reach into grey literature, conference proceedings, theses, and non-English or small/regional venues — exactly the kind of material through which someone doing genuine metaresearch work might be visible without ever appearing in a more narrowly curated index. OpenAlex, named as a suggested source in the call, is used as a structured cross-check and metadata-backfill layer: its author and institution identifiers support disambiguation and, critically, support tracing a person's institutional affiliations over time, which is what makes the person-institution relational structure possible in the first place. OpenAlex's own disambiguation and topic-tagging error rates are real and documented, and are treated as something to actively validate against rather than a reason to assume its structured identifiers are more reliable than they are. Which venues, disciplines, career stages, and institutional types count as part of this directory's scope is decided and published before the main retrieval query runs, so the directory's boundary is a documented decision rather than an artifact of whatever a single search happens to surface. Crossref fills metadata gaps in Scholar-derived records, and Publish or Perish's practical constraints — no formal API, rate limits, CAPTCHA challenges tied to its underlying reliance on the Scholar web interface — are worked around through batched queries and checkpointing rather than avoided by abandoning Scholar as the primary source.
+
+Records retrieved one publication at a time are restructured around the person, using OpenAlex author identifiers and ORCID, where available, to resolve ambiguous name strings and to reconstruct a person's institutional history across multiple affiliations. A sampled subset is manually reviewed and the estimated disambiguation error rate is reported rather than treated as solved. Initiative-level relationships — which community infrastructure projects, working groups, or collaborative platforms a person contributes to — are identified where publicly documented (project websites, acknowledgements, contributor lists) and linked into the same relational structure as institutional affiliation, though this layer is necessarily less complete than the person and institution layers given how unevenly initiatives document their contributors. Self-described research interests are drawn only from ORCID biographies and academic or social media profiles that a person has themselves linked from ORCID or an institutional page, never from probabilistic matching against independently scraped lists, so that a person who has not linked an account is simply absent from that field rather than incorrectly matched into it on the basis of a name-string guess.
+
+## Validating the directory
+
+Coverage is checked against known reference lists — CARN/RECAR membership and related Canadian research-integrity and open-science networks — to estimate how much of the known population the directory actually captures. A random manual-review sample of retrieved records estimates the precision of the "Canadian metaresearcher" classification itself. Both Scholar's and OpenAlex's known data-quality issues — inconsistent metadata and weak disambiguation on Scholar's side, disambiguation and topic-tagging error on OpenAlex's side — are measured as sources of error in the directory rather than assumed away in either direction.
+
+## Openness and reproducibility
+
+Retrieval queries, inclusion and exclusion criteria, disambiguation procedures, and the tag-vocabulary mapping are published as versioned, dated artifacts in a public repository, alongside the retrieval, enrichment, and analysis code itself. The dataset is openly licensed, with one explicit boundary: contact information collected for internal disambiguation is never included in the public release. Full-text-derived fields are included only where source licensing permits redistribution; where it does not, only derived tags are published, never excerpted text.
+
+## Who this directory will still miss
+
+A directory built from indexed, formally published output will under-represent STS-style qualitative metaresearch, francophone scholarship, community-based and Indigenous research governance work, and practitioners — librarians, infrastructure specialists — whose contributions may never take the form of an indexed publication at all. Scholar's broader reach partially mitigates this, which is why it is used as the primary source here, but it does not eliminate the underlying bias. "Canadian metaresearcher" is operationalized through institutional affiliation and geographic terms in text, which will miss diaspora researchers working on Canadian topics from abroad and may over-count short-term or visiting affiliations. The initiative-level relational layer, in particular, will be uneven: well-documented projects with clear contributor lists will be far better represented than informal or ad hoc collaborations that leave no public trace. These specific gaps, and others identified as the work proceeds, are compiled into a dated register published alongside the dataset and updated as the directory develops.
+
+## Work plan
+
+Assuming notification on August 1, 2026 against an October 27–29, 2026 conference date, roughly twelve weeks are available. Weeks 1–3: publish inclusion and exclusion criteria, run the primary Google Scholar retrieval via Publish or Perish, cross-check against OpenAlex, enrich via Crossref. Weeks 3–5: restructure records around people and reconstruct institutional affiliation histories, with a sampled manual review of disambiguation. Weeks 5–8: build the self-described and tag-based fields in parallel, kept distinct, and identify initiative-level relationships where publicly documented. Weeks 8–10: apply the tag vocabulary consistently across entries, run coverage and precision validation, compile the known-gaps register. Weeks 10–12: finalize the public dataset and code release, complete documentation, prepare the plenary presentation. Deeper analysis of the initiative layer — funding relationships, project governance structures — stays out of the October deliverable and is left for future work, once the person and institution layers are in place to attach it to.

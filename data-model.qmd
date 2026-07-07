@@ -1,0 +1,13 @@
+---
+title: "Data model"
+---
+
+The directory is built as a series of flat text files: no database, no server, just JSON records that can be transformed and rendered using a static site generator and other extended data processing pipelines. This keeps the whole dataset diffable, versionable, and inspectable with nothing more than a text editor, and it means anyone downloading the repository gets data in full.
+
+Three key files anchor the dataset: people, publications, and initiatives.
+
+`people.json` — one object per person: an ID, display name, ORCID if known, titles, affiliations, categories and tags. Contributions to publications and initiatives are inferred through backlinks from those respective data sources.
+
+`publications.json` — one object per publication: a standard biblatex array with additional information extracted from the text, including topics of concern and relationships with initiatives.
+
+`initiatives.json` — one object per initiative: an ID, name, URL, institutional host, and membership roster.
