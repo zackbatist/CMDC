@@ -8,20 +8,30 @@ project:
 website:
   title: "Canadian Metaresearch Data Challenge"
   description: "A directory of Canadian metaresearchers, showcasing the field's diversity."
-  navbar:
-    left:
+  sidebar:
+    pinned: true
+    align: center
+    style: "docked"
+    search: false
+    collapse-level: 2
+    contents:
       - href: index.qmd
         text: Overview
       - href: proposal.qmd
         text: Proposal
-      - href: data-model.qmd
-        text: Data Model
-      - href: pipeline.qmd
-        text: Pipeline
       - href: workplan.qmd
         text: Work Plan Detail
-      - href: data-sources.qmd
-        text: Data Sources
+      - section: "Supplementary"
+        contents:
+        - href: data-model.qmd
+          text: Data Model
+        - href: pipeline.qmd
+          text: Pipeline
+        - href: data-sources.qmd
+          text: Data Sources
+      - text: GitHub
+        href: https://github.com/zackbatist/CMDC
+
   page-footer:
     left: ""
     right: ""
@@ -43,3 +53,6 @@ format:
     css: assets/styles.css
     toc: false
     number-sections: false
+    grid:
+      body-width: 1000px
+      margin-width: 350px
