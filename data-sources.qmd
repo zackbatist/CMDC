@@ -1,29 +1,29 @@
 ---
-title: "Data sources"
+title: "Data Sources"
 ---
 
-## Google Scholar
-
-Google Scholar indexes an unusually broad range of material relative to curated bibliographic databases — journal articles, but also theses, conference proceedings, preprints, institutional repository items, and grey literature that formal indexes often exclude. It has no public API; there is no formal contract for automated access, and Google has no obligation to keep the interface or its underlying ranking stable. Retrieval for this project goes through Publish or Perish (see below) rather than direct scraping, but the underlying access model is still the Scholar web interface, with the rate limits and CAPTCHA challenges that come with that.
-
-Scholar does not assign stable identifiers to authors or institutions. Records come back as name strings, which means disambiguation (is this "J. Smith" the same J. Smith as three records over) has to be handled downstream, either through cross-referencing against ORCID/OpenAlex or through manual review.
+Three sources, chosen because each captures a different way a Canadian metascience initiative could leave a trace, none of which fully overlaps with the others.
 
 ## OpenAlex
 
-OpenAlex is a large, open bibliographic database maintained by OurResearch, built as a successor to Microsoft Academic Graph. It's accessed through a documented, versioned REST API — no scraping, no rate-limit brinkmanship, results returned as structured JSON. It assigns persistent IDs to works, authors, institutions, and concepts, and it's the source explicitly named (as a suggestion, not a requirement) in the call for this challenge.
+Canadian-affiliated works are queried by institution and by metascience-specific topic ID. Topic IDs are obtained directly from OpenAlex's own topic hierarchy (`/topics?search=`) for metascience, scientometrics, research integrity, reproducibility, and scholarly communication, in both English and French, rather than assumed or hand-picked.
 
-Those IDs make some engineering steps easier, but they're not error-free: author and institution disambiguation in OpenAlex has known, documented mistakes, and its topic/concept classification has changed structure across versions in ways that make it a less stable basis for longitudinal or reproducible classification than it looks at first glance. Coverage also varies by field and region — it does not close the long-tail gap that Scholar's breadth partially fills.
+Query shape: `works?filter=institutions.country_code:CA,primary_topic.id:{metascience-specific topic IDs}`.
 
-For this project, OpenAlex is used as a structured cross-check and metadata-backfill layer alongside the primary Scholar-based retrieval — its IDs are useful for disambiguation, with the caveat above stated plainly rather than assumed away.
+Results are structured metadata: title, authors, institutions, primary topic, and, where available, `open_access.oa_url`. For the subset with an open-access link, the PDF is retrieved and processed with GROBID specifically to isolate the acknowledgements section, since that is where an initiative not central to the paper's own subject matter is most likely to be named in passing. That extracted text is then checked against the bilingual term list.
 
-## Crossref
+## Tri-Council and provincial funding databases
 
-Crossref is the DOI registration agency for scholarly publishing, and its metadata API is used here as an enrichment layer — filling in author names, affiliations, and other metadata gaps in records retrieved primarily from Scholar. It's a well-established, documented API with broad coverage of DOI-registered content, though (like any source relying on publisher-submitted metadata) completeness and accuracy vary by publisher and venue.
+CIHR's structured award data is available as bulk downloadable files (one per fiscal year, since 2000-01, via the Open Government Portal), each row containing a project title, principal investigator, and, in more recent files, a lay summary and research-category classification. NSERC and SSHRC's award search interfaces are queried the same way, matching the bilingual term list against project titles and descriptions. FRQ is searched identically for Quebec-funded work, which matters specifically because federal-only searches under-represent Quebec French-language metascience activity.
 
-## ORCID
+## Research Data Canada and the Digital Research Alliance of Canada
 
-ORCID provides persistent, researcher-controlled identifiers along with self-maintained biographical and affiliation information. It's used here for two purposes: as a disambiguation cross-check alongside OpenAlex author IDs, and as one of the sources for the self-described research-interest layer, where a researcher has populated their ORCID biography themselves. Coverage depends entirely on whether a given researcher has an ORCID and keeps it updated — it's a high-trust, low-coverage source relative to Scholar or OpenAlex.
+Both organizations maintain and publish their own working-group and committee pages directly, standing web pages naming each group, its mandate, and often its members, rather than an indexed or searchable database. These are read in full, since the number of listed groups is small and finite, and every named group is treated as a candidate regardless of whether its name or mandate uses recognizable metascience terminology, since these are institutionally embedded research-infrastructure groups where relevance may be described in infrastructure or governance language rather than metascience's own vocabulary.
 
-## Social media profiles
+## Enrichment
 
-## Faculty and project websites
+Once a candidate is confirmed, its record is built out with detail drawn from its own source material and from cross-referenced identifiers. Institutional affiliation and any stated funding relationship are taken directly from whichever source surfaced the initiative. Membership names are cross-checked against ORCID and OpenAlex author identifiers to disambiguate people who share a name. A plain-language description is built from the initiative's own documentation where it exists. Where an initiative has no independent documentation of its own, only what a funding record or working-group listing states about it is retained; detail that isn't actually stated anywhere is not inferred to fill the gap.
+
+## Why not other sources
+
+A university-website search (site-restricted queries across a list of Canadian institutions) was considered and set aside: it depends on uneven search-engine indexing, cannot verify completeness the way a structured API or bulk dataset can, and is unlikely to reach any initiative informal enough to lack an institutional web page in the first place, which is exactly the population most worth finding. Conference programs and community-registration platforms (Zenodo, OSF) were also considered and set aside, since they only capture initiatives that chose to self-register or present at one specific venue, and risk anchoring the whole directory to whichever initiatives were already visible enough to know about that venue.

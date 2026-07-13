@@ -1,68 +1,40 @@
 ---
-title: "Retrieval and processing pipeline"
+title: "Pipeline"
 ---
 
-Extraction, resolution, construction, the same structure as [BibVik](https://github.com/zackbatist/bibvik): extract from source, resolve against open metadata, build the target structure.
+One shared pipeline runs across all four sources, rather than a separate process per source. Each source differs only in its retrieval step; everything after that is identical.
 
-OpenAlex is the primary scripted source, not Google Scholar. Scholar has no documented API; a scripted path to it means Publish or Perish, which exports title, authors, year, and abstract but no structured affiliation or author-ID field, restricts queries to avoid CAPTCHA and rate limits, and lists author disambiguation as an open problem in its own documentation. None of that is fixable inside an automated pipeline. Scholar's value, surfacing grey literature and small or non-English venues OpenAlex under-indexes, stays available as manual supplementary search against specific known gaps, not as a scripted stage.
+## Retrieval
+
+Each source is queried in its own way, since each has a different access mechanism:
+
+- **OpenAlex**: API query filtered by Canadian institution and metascience-specific topic ID, as described in [Data Sources](data-sources.qmd). Where `has_fulltext` is true, the open-access PDF is retrieved.
+- **Funding databases**: bulk data download where available, or the funder's own search interface, queried against the same bilingual term list.
+- **Journals**: direct search of each venue for metascience-related content.
+- **Research Data Canada / Digital Research Alliance**: their published working-group listings, fetched directly.
+
+The output of this step, regardless of source, is a body of text: an acknowledgements section, a funding record's title and description, an article's content, a listing page's text.
 
 ## Extraction
 
-OpenAlex is the primary source because its `authorships[]` object returns, for a single work, exactly the three identifiers resolution depends on, nested together rather than requiring separate lookups: `author.id`, `author.orcid` where OpenAlex has already resolved one, and `institutions[].ror`. No other source bundles author identity, ORCID, and institution identity in one structure attached to one publication record. This is also why Scholar/PoP was dropped as a scripted stage: it returns none of these three keys, so using it would mean doing the identity work OpenAlex already does, by hand, for every record.
+Every piece of retrieved text is passed through the same fixed prompt, asking whether it names a real, ongoing initiative, distinct from a funder or institution name, and if so, to extract the name and any stated detail about it (people, affiliation, description).
 
-Crossref is queried by DOI only where OpenAlex leaves a bibliographic field empty. It is not used as an affiliation source: Crossref's own `author[].affiliation[]` field is documented as frequently empty or unstructured free text, which is a weaker signal than OpenAlex's ROR-linked `institutions[]`, so using it for affiliation would mean discarding a better available source in favour of a worse one for no reason other than having already queried Crossref for something else.
+For OpenAlex records specifically, full-text PDFs are first processed with GROBID to isolate the acknowledgements section, since that is where an initiative is most likely to be named in a publication that isn't directly about the initiative itself.
 
-Keyword extraction runs on full text where source licensing permits redistribution of derived output, and falls back to the abstract where it doesn't. This is a legal constraint, not a technical one: full text is frequently available to read but not licensed for the kind of downstream reuse this project's open dataset commitment requires, so the fallback exists to keep the dataset legally publishable, not because full text is harder to process.
+Each hit is logged as one row: candidate name, source, source URL or citation, date, extracted detail, and the raw source text retained for later verification.
 
-Each row below maps one field a source returns to the field it fills in `publications.json` or `people.json`. Rows marked "resolution key" aren't written directly; they're what resolution (below) checks before deciding whether a record belongs to a person or institution already on file.
+## Deduplication
 
-| Source           | Source field                       | Destination                           |
-|:-----------------|:------------------------------------|:----------------------------------------|
-| OpenAlex         | work.title                         | publications.json: title              |
-| OpenAlex         | work.doi                           | publications.json: doi                |
-| OpenAlex         | work.publication_date              | publications.json: date               |
-| OpenAlex         | work.biblio.volume                 | publications.json: volume             |
-| OpenAlex         | work.biblio.issue                  | publications.json: number             |
-| OpenAlex         | work.biblio.first_page/last_page   | publications.json: pages              |
-| OpenAlex         | authorships[].author.id            | resolution key                        |
-| OpenAlex         | authorships[].author.orcid         | resolution key                        |
-| OpenAlex         | authorships[].author.display_name  | publications.json: author             |
-| OpenAlex         | authorships[].institutions[].ror   | resolution key                        |
-| OpenAlex         | authorships[].institutions[].display_name | affiliations: institution      |
-| Crossref         | author[].given, .family            | backfill, only if OpenAlex is empty   |
-| Crossref         | any bibliographic field            | backfill, only if OpenAlex is empty   |
-| full text        | abstract or body                   | publications.json: keywords           |
+Because the same initiative can be named in more than one source, candidate names are compared against each other before confirmation: fuzzy string matching on the name itself, plus a check for shared people or institutions already extracted. Matches are merged into a single candidate record rather than confirmed twice under separate log entries.
 
-## Resolution
+## Confirmation
 
-Every publication record coming out of extraction splits into two checks that run in parallel: resolving its author against `people.json`, and resolving its institution against the `ror` values already recorded in someone's `affiliations`.
+Each merged candidate is checked against one fixed rule: does it have its own documentation (a website, a repository, a page describing it), or is it independently named in at least two of the four sources. Candidates that pass are marked confirmed and move into the initiative record. Candidates that don't stay on the unconfirmed list, published alongside the dataset rather than discarded.
 
-Author resolution tries an identifier match first, in order: OpenAlex's `author.id`, then `author.orcid` where OpenAlex has resolved one. Either one matching attaches the work to that person immediately. If neither matches, the name string is compared against existing `display_name` values as a fallback — a weaker signal, since it has no stable identifier behind it. A name-string match is not merged automatically; it goes to manual review. No match of any kind creates a new person record.
+## Aggregation
 
-Institution resolution works the same way but with one fewer identifier: match on ROR ID, and if that fails, compare the institution name as text. OpenAlex's own institution matching has roughly a 94% ROR match rate, so a small fraction of institution links have no ROR ID to check and fall to the name comparison by default; those also go to manual review rather than merging on name alone.
+For each confirmed initiative, the people named in connection with it seed the person layer, cross-checked against ORCID and OpenAlex author identifiers using the same disambiguation approach used in the author's other work reconstructing citation networks (BibVik). Publications connected to a confirmed initiative or its people are retrieved from OpenAlex and Crossref, supplemented by GROBID-extracted metadata where needed, and written into the publication layer.
 
-![Resolution flowchart: a publication record splits into author resolution (match author ID, then ORCID, then compare name as a fallback) and institution resolution (match ROR ID, then compare institution name as a fallback). Identifier matches merge directly. Name-string matches go to manual review before merging. No match creates a new record. All outcomes write into people.json or publications.json.](assets/resolution-flowchart.svg)
+## What this pipeline cannot guarantee
 
-A sampled subset of both author and institution merges is reviewed by hand each run, identifier matches included, not just the flagged name-string ones. The error rate is reported alongside the merged data, not folded into it.
-
-## Writing the files
-
-Once a record is resolved, either to an existing person and institution or to newly created ones, its fields are written into `people.json` and `publications.json`.
-
-| Field                       | File               | Set from                                 |
-|:-----------------------------|:-------------------|:-------------------------------------------|
-| id                          | people.json        | assigned at first resolution             |
-| display_name                | people.json        | OpenAlex author.display_name             |
-| orcid                       | people.json        | OpenAlex author.orcid, if present        |
-| affiliations[].institution  | people.json        | OpenAlex institutions[].display_name     |
-| affiliations[].ror          | people.json        | OpenAlex institutions[].ror              |
-| affiliations[].roleName     | people.json        | mapped from author_position              |
-| affiliations[].startDate    | people.json        | earliest work year at that institution   |
-| affiliations[].endDate      | people.json        | unset until a later run sees a change    |
-| author                      | publications.json  | array of Lastname, Firstname strings     |
-| identifiers                 | people.json        | ORCID bio, self-linked accounts only     |
-| categories, tags            | people.json        | aggregated from resolved publications' keywords |
-
-`author` on a publication record is written as name strings, not as a stored link to a person ID; the link is re-derived through resolution each time it's needed. `identifiers` is populated independently of extraction and resolution: only from a person's own ORCID biography and any accounts they have linked there themselves, never from OpenAlex or Crossref.
-
-`initiatives.json`'s membership roster and `publications.json`'s `initiatives` field aren't in either table above because they have no extraction step yet: there is generally no open metadata source to resolve an initiative's membership against the way there is for authors and institutions. It depends on whatever documentation an initiative happens to publish. See [work plan](workplan.qmd).
+This process will not find every Canadian metascience initiative. It is most likely to miss initiatives with no online presence, informal groups that never documented themselves anywhere searchable, and work happening in languages or communities the source list and term list don't reach. The unconfirmed list and a dated register of known gaps are published specifically so this limitation stays visible and addressable over time, rather than implying the dataset is complete.

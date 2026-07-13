@@ -1,170 +1,25 @@
 ---
-title: "Data model"
+title: "Data Model"
 ---
 
-The directory is a series of flat JSON files, which may be transformed and rendered with a static site generator or other extended data visualization pipeline.
+The directory comprises three linked data files: initiatives, people, and publications, stored as JSON arrays and connected by overlapping keys.
 
-Three files anchor the dataset: people, publications, and initiatives.
+## Initiative record
 
-## people.json
+Each confirmed initiative is recorded with: name, the source(s) it was found in, a plain-language description drawn from its own documentation where available, any stated institutional or funding affiliation, and the people named in connection with it. Fields with no available information are left blank rather than inferred.
 
-One object per person.
+## Person record
 
-| Field                | Type             | Notes                                         |
-|:---------------------|:-----------------|:-----------------------------------------------|
-| `id`                 | string           | lastname-firstname                            |
-| `display_name`       | string           | full name                                     |
-| `orcid`              | string           | ORCID iD, if known                            |
-| `affiliations`       | array of objects | see OrganizationRole table below              |
-| `categories`         | array of strings | disciplinary or professional categories       |
-| `tags`               | array of strings | free-text tags                                |
-| `identifiers`        | array of objects | see identifiers table below                   |
+A person enters the directory because a confirmed initiative names them, not through an independent search. Each person is recorded with their name as given, and, where findable, an ORCID iD or OpenAlex author ID used to disambiguate them from anyone sharing their name. Institutional affiliation history and self-described research interests are added from ORCID, WikiData, and any profile a person has linked themselves, never from unverified matching.
 
-### affiliations
+## Publication record
 
-Array of objects, following the shape of schema.org's `OrganizationRole`.
+Publications connected to a confirmed initiative or its people, structured as a custom extension of BibLaTeX. Populated from OpenAlex and Crossref metadata directly, or, where metadata is incomplete, from full text via GROBID.
 
-| Field                | Type             | Notes                                         |
-|:---------------------|:-----------------|:-----------------------------------------------|
-| `institution`        | string           | institution name                              |
-| `ror`                | string           | ROR ID, full https://ror.org/... form         |
-| `roleName`           | string           | e.g. Postdoctoral Researcher                  |
-| `startDate`          | string           | year                                          |
-| `endDate`            | string           | year, omitted if current                      |
+## Confirmation status
 
-### identifiers
+Every initiative, person, and publication carries a status field: confirmed (has its own documentation, or independent mention in two of the four sources) or unconfirmed (found once, not yet independently verified). Unconfirmed entries are retained and published, not discarded, as a visible account of what the pipeline has found but not yet verified.
 
-Array of objects, following ORCID's `external-id` construct.
+## What this model deliberately does not include
 
-| Field                | Type             | Notes                                         |
-|:---------------------|:-----------------|:-----------------------------------------------|
-| `type`               | string           | e.g. openalex, personal website, Mastodon     |
-| `value`              | string           | the identifier or handle itself               |
-| `url`                | string           | resolvable link                               |
-
-### Example
-
-```json
-{
-  "id": "batist-zack",
-  "display_name": "Zack Batist",
-  "orcid": "0000-0003-0435-508X",
-  "affiliations": [
-    {
-      "institution": "McGill University",
-      "ror": "https://ror.org/01pxwe438",
-      "roleName": "Postdoctoral Researcher",
-      "startDate": "2024"
-    },
-    {
-      "institution": "University of Toronto",
-      "ror": "https://ror.org/03dbr7087",
-      "roleName": "PhD Candidate",
-      "startDate": "2017",
-      "endDate": "2023"
-    }
-  ],
-  "categories": ["scholarly communication", "STS"],
-  "tags": ["open-science", "data-sharing", "archaeology"],
-  "identifiers": [
-    {
-      "type": "openalex",
-      "value": "A5023888391",
-      "url": "https://openalex.org/A5023888391"
-    },
-    {
-      "type": "personal website",
-      "value": "https://zackbatist.info",
-      "url": "https://zackbatist.info"
-    },
-    {
-      "type": "Mastodon",
-      "value": "@zackbatist@archaeo.social",
-      "url": "https://archaeo.social/@zackbatist"
-    }
-  ]
-}
-```
-
-## publications.json
-
-One object per publication, following BibLaTeX field names.
-
-| Field                | Type             | Notes                                         |
-|:---------------------|:-----------------|:-----------------------------------------------|
-| `citekey`            | string           | lowercase last name plus year                 |
-| `entrytype`          | string           | BibLaTeX entry type                           |
-| `author`             | array of strings | each as Lastname, Firstname                   |
-| `title`              | string           | —                                              |
-| `journaltitle`       | string           | —                                              |
-| `date`               | string           | —                                              |
-| `volume`             | string           | —                                              |
-| `number`             | string           | —                                              |
-| `pages`              | string           | —                                              |
-| `doi`                | string           | —                                              |
-| `keywords`           | string           | standard BibLaTeX field                       |
-
-### Example
-
-```json
-{
-  "citekey": "batist2021",
-  "entrytype": "article",
-  "author": [
-    "Batist, Zachary",
-    "Masters, Val",
-    "Torma, Tiffany C.",
-    "Carter, Michael",
-    "Ferris, Neal",
-    "Huvila, Isto",
-    "Ross, Seamus",
-    "Dallas, Costis"
-  ],
-  "title": "Figurations of Digital Practice, Craft, and Agency in Two Mediterranean Fieldwork Projects",
-  "journaltitle": "Open Archaeology",
-  "date": "2021",
-  "volume": "7",
-  "number": "1",
-  "pages": "1731--1755",
-  "doi": "10.1515/opar-2020-0217",
-  "keywords": "digital practice, fieldwork, craft, agency"
-}
-```
-
-Each entry in `author` links to `people.json` through the pipeline's disambiguation step, not through an embedded ID. An `initiatives` field, relating a publication to initiatives, is planned but not yet implemented.
-
-## initiatives.json
-
-One object per initiative.
-
-| Field                | Type             | Notes                                         |
-|:---------------------|:-----------------|:-----------------------------------------------|
-| `id`                 | string           | —                                              |
-| `name`               | string           | —                                              |
-| `url`                | string           | —                                              |
-| `institutional_host` | string or null   | ROR ID, or null if no single host             |
-
-### Example
-
-```json
-{
-  "id": "open-archaeo",
-  "name": "open-archaeo",
-  "url": "https://o-a.rocks",
-  "institutional_host": null
-}
-```
-
-A membership roster, relating an initiative to its contributors, is planned but not yet implemented.
-
-## Linked resources
-
-- [schema.org: OrganizationRole](https://schema.org/OrganizationRole)
-- [ROR: Research Organization Registry](https://ror.org/)
-- [ROR identifier documentation](https://ror.readme.io/docs/identifier)
-- [OpenAlex: Institutions](https://docs.openalex.org/api-entities/institutions)
-- [OpenAlex: single entity lookup](https://docs.openalex.org/how-to-use-the-api/get-single-entities)
-- [Crossref: affiliations and ROR](https://www.crossref.org/documentation/schema-library/markup-guide-metadata-segments/affiliations/)
-- [ORCID record schema](https://info.orcid.org/documentation/integration-guide/orcid-record/)
-- [BibLaTeX package documentation](https://ctan.org/pkg/biblatex)
-- [BibTeX field reference](https://bibtex.eu/fields/)
+There is no assumption that every initiative will have equally complete data. An initiative found only through a funding record may have no stated membership; one found through its own working-group page may have full membership but no funding data. The model records what's actually knowable per source rather than filling gaps with inference.
