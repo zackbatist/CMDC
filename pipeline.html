@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en-CA" xml:lang="en-CA"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.8.25">
@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Retrieval and processing pipeline – Canadian Metaresearch Data Challenge</title>
+<title>Data Sources, Model, and Pipeline – Canadian Metaresearch Data Challenge</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,7 +24,12 @@ ul.task-list li input[type="checkbox"] {
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -35,8 +40,20 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-15f0d6578829a96e327082df99881d44.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-d42ecfdc19a5eb83045caa16c514f7c9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -51,6 +68,17 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<style type="text/css">
+h1.hide {
+  display: none;
+}
+#quarto-document-content {
+    text-align: justify;
+  }
+  .abstract {
+    text-align: justify;
+  }
+</style>
 
 
 <link rel="stylesheet" href="assets/styles.css">
@@ -65,7 +93,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data-model.html">Supplementary</a></li><li class="breadcrumb-item"><a href="./pipeline.html">Pipeline</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pipeline.html">Data Sources, Model, and Pipeline</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -75,7 +103,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-center sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
       <a href="./index.html" class="sidebar-logo-link">
       </a>
       </div>
@@ -95,43 +123,8 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./workplan.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Work Plan Detail</span></a>
-  </div>
-</li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Supplementary</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./data-model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Model</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./pipeline.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Pipeline</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./data-sources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Sources</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="https://github.com/zackbatist/CMDC" class="sidebar-item-text sidebar-link">
- <span class="menu-text">GitHub</span></a>
+ <span class="menu-text">Data Sources, Model, and Pipeline</span></a>
   </div>
 </li>
     </ul>
@@ -143,9 +136,10 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data-model.html">Supplementary</a></li><li class="breadcrumb-item"><a href="./pipeline.html">Pipeline</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Retrieval and processing pipeline</h1>
+<h1 class="title">Data Sources, Model, and Pipeline</h1>
+<p class="subtitle lead">Technical detail supporting the submitted proposal</p>
 </div>
 
 
@@ -162,14 +156,43 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>The sources described in <a href="./data-sources.html">data sources</a> don’t map one-to-one onto the files described in <a href="./data-model.html">the data model</a> — each source feeds a different stage of processing, and several stages draw on more than one source at once. This page traces that path: what comes in, what happens to it, and which file it ends up in.</p>
-<section id="from-sources-to-entries" class="level2">
-<h2 class="anchored" data-anchor-id="from-sources-to-entries">From sources to entries</h2>
-<p>Google Scholar, retrieved via Publish or Perish, is where the bulk of publication records come from, chosen for its reach into grey literature and non-mainstream venues. OpenAlex is queried in parallel, not to replace Scholar but to backfill metadata and, more importantly, to supply the author and institution identifiers that make disambiguation and affiliation-history tracking possible at all — Scholar’s own records are just name strings. Crossref fills in whatever metadata gaps remain in Scholar-derived records once OpenAlex has been checked. ORCID sits apart from the other three: it isn’t used for retrieving publications at all, only for pulling in a person’s own biography and any academic or social profiles they’ve linked themselves.</p>
-<p>Retrieval and disambiguation is the first processing stage, and it’s where records stop being about publications and start being about people: Scholar, OpenAlex, and Crossref records for the same person get folded into a single entry, using OpenAlex and ORCID identifiers to resolve which name strings actually refer to the same individual. This is also where a person’s affiliation history gets reconstructed — OpenAlex’s institution IDs, linked to author records over time, are what let the pipeline say not just “this person is at this institution” but “this person was at this institution from this date to that date.”</p>
-<p>Self-description runs as a separate track entirely, off to the side of the publication-retrieval work. It only draws on ORCID biographies and on academic or social profiles a person has linked from ORCID themselves — nothing from Scholar, OpenAlex, or Crossref touches this field, which is what keeps it a genuinely independent account of how someone describes their own work rather than a summary of their publication record.</p>
-<p>Tag application happens after disambiguation, working on the now-person-centred publication records, applying the Rubin typology vocabulary either through algorithmic extraction from abstracts and full text or through manual review, with the method recorded either way.</p>
-<p>Initiative linking is the least automatable stage: it depends on whatever public documentation an initiative happens to provide — a contributor list, an acknowledgements section, a project website — matched against the people already in the directory. It runs last because it needs the person layer to already exist before it has anyone to link initiatives to.</p>
+<p>This page expands on the methodology summarized in the <a href="./proposal.html">proposal</a>. It covers the two data sources the pipeline draws on, the two-phase construction process, and the resulting data model.</p>
+<section id="data-sources" class="level2">
+<h2 class="anchored" data-anchor-id="data-sources">Data sources</h2>
+<p>The pipeline draws on two sources to build the initial dataset.</p>
+<p><strong>Funding records</strong> released by federal and provincial funding agencies. These include project titles, plain-language summaries, names of principal investigators and institutional hosts, and partner organizations. Funding records are the primary way an initiative first enters the dataset, since a funded project is identifiable independent of whether it has produced any publications yet.</p>
+<p><strong>OpenAlex</strong>, queried in two ways: by a set of metaresearch-related topic IDs drawn from OpenAlex’s own topic taxonomy, and by authors’ Canadian affiliations. Where a matching work has full text available, it is processed with <a href="https://grobid.readthedocs.io/">GROBID</a>, an open-source tool for parsing structured data from research articles, to extract information typically found in acknowledgements and funding disclosure sections: funding sources and relationships with umbrella organizations that supported the work.</p>
+</section>
+<section id="two-phase-construction" class="level2">
+<h2 class="anchored" data-anchor-id="two-phase-construction">Two-phase construction</h2>
+<p>The directory is constructed in two phases.</p>
+<section id="phase-1-identification-and-collection" class="level3">
+<h3 class="anchored" data-anchor-id="phase-1-identification-and-collection">Phase 1: identification and collection</h3>
+<p>The first phase identifies, locates, and assembles information describing each initiative, producing a base dataset that is then enriched.</p>
+<p>Funding records are enriched by locating each initiative’s official web pages and appending rosters of connected individuals. In parallel, OpenAlex records are processed as described above.</p>
+<p>Names of individuals and initiatives logged from each source are matched by string similarity and by other identifiers where available (ORCID, email address), and matches are merged into a single record. Records that don’t match anything else prompt a manual query to locate additional information.</p>
+<p>The outcome of this phase is a comprehensive dataset comprising: metaresearch initiatives, the works deriving from them, the people who produced that work, their institutional and disciplinary homes, and the sources from which they obtained financial support.</p>
+</section>
+<section id="phase-2-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="phase-2-analysis">Phase 2: analysis</h3>
+<p>Each record from Phase 1 is explicitly linked to textual resources connected to it, including project web pages and scholarly outputs. The second phase analyzes these materials to determine specific aspects of metascience associated with each initiative.</p>
+<p>Topic modelling and targeted LLM queries are applied to the titles, abstracts, and full texts (where available) of each scholarly output, and to initiatives’ own descriptions of their objectives and activities as documented on their websites. Topics derive from how each initiative identifies itself, its methods, and its disciplinary orientation.</p>
+<p>These topics may also be fitted into more established taxonomies, including those of Peterson and Panofsky (2023) and Rubin (2026); these are appended to initiative records as tags and categories, respectively.</p>
+</section>
+</section>
+<section id="data-model" class="level2">
+<h2 class="anchored" data-anchor-id="data-model">Data model</h2>
+<p>Phase 1 and Phase 2 together populate three kinds of information, linked to one another:</p>
+<ul>
+<li><strong>Initiatives</strong> — the anchor record for each identified effort: its name, institutional or funding host, and connected textual resources (web pages, scholarly outputs).</li>
+<li><strong>People</strong> — individuals connected to an initiative, drawn from principal investigator and roster information, with institutional and disciplinary affiliations and matched across sources by identifier or string similarity.</li>
+<li><strong>Works</strong> — scholarly outputs and other textual resources deriving from an initiative, carrying the tags and categories assigned during Phase 2’s topic modelling and taxonomy fitting.</li>
+</ul>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p>Peterson, David, and Aaron Panofsky. 2023. Metascience as a Scientific Social Movement. <em>Minerva</em> 61 (2): 147–74. https://doi.org/10.1007/s11024-023-09490-3.</p>
+<p>Rubin, Mark. 2026. Six Types of Metascience. Blog post. <em>Critical Metascience</em>, June 17. https://markrubin.substack.com/p/contained-experiments-reproducibility.</p>
 
 
 </section>
@@ -248,7 +271,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/zackbatist\.info\/CMDC\/");
+        var filterRegex = new RegExp("https:\/\/zackbatist\.github\.io\/CMDC\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

@@ -2,93 +2,51 @@
   {
     "objectID": "pipeline.html",
     "href": "pipeline.html",
-    "title": "Retrieval and processing pipeline",
+    "title": "Data Sources, Model, and Pipeline",
     "section": "",
-    "text": "The sources described in data sources don’t map one-to-one onto the files described in the data model — each source feeds a different stage of processing, and several stages draw on more than one source at once. This page traces that path: what comes in, what happens to it, and which file it ends up in.",
+    "text": "This page expands on the methodology summarized in the proposal. It covers the two data sources the pipeline draws on, the two-phase construction process, and the resulting data model.",
     "crumbs": [
-      "Supplementary",
-      "Pipeline"
+      "Data Sources, Model, and Pipeline"
     ]
   },
   {
-    "objectID": "pipeline.html#from-sources-to-entries",
-    "href": "pipeline.html#from-sources-to-entries",
-    "title": "Retrieval and processing pipeline",
-    "section": "From sources to entries",
-    "text": "From sources to entries\nGoogle Scholar, retrieved via Publish or Perish, is where the bulk of publication records come from, chosen for its reach into grey literature and non-mainstream venues. OpenAlex is queried in parallel, not to replace Scholar but to backfill metadata and, more importantly, to supply the author and institution identifiers that make disambiguation and affiliation-history tracking possible at all — Scholar’s own records are just name strings. Crossref fills in whatever metadata gaps remain in Scholar-derived records once OpenAlex has been checked. ORCID sits apart from the other three: it isn’t used for retrieving publications at all, only for pulling in a person’s own biography and any academic or social profiles they’ve linked themselves.\nRetrieval and disambiguation is the first processing stage, and it’s where records stop being about publications and start being about people: Scholar, OpenAlex, and Crossref records for the same person get folded into a single entry, using OpenAlex and ORCID identifiers to resolve which name strings actually refer to the same individual. This is also where a person’s affiliation history gets reconstructed — OpenAlex’s institution IDs, linked to author records over time, are what let the pipeline say not just “this person is at this institution” but “this person was at this institution from this date to that date.”\nSelf-description runs as a separate track entirely, off to the side of the publication-retrieval work. It only draws on ORCID biographies and on academic or social profiles a person has linked from ORCID themselves — nothing from Scholar, OpenAlex, or Crossref touches this field, which is what keeps it a genuinely independent account of how someone describes their own work rather than a summary of their publication record.\nTag application happens after disambiguation, working on the now-person-centred publication records, applying the Rubin typology vocabulary either through algorithmic extraction from abstracts and full text or through manual review, with the method recorded either way.\nInitiative linking is the least automatable stage: it depends on whatever public documentation an initiative happens to provide — a contributor list, an acknowledgements section, a project website — matched against the people already in the directory. It runs last because it needs the person layer to already exist before it has anyone to link initiatives to.",
+    "objectID": "pipeline.html#data-sources",
+    "href": "pipeline.html#data-sources",
+    "title": "Data Sources, Model, and Pipeline",
+    "section": "Data sources",
+    "text": "Data sources\nThe pipeline draws on two sources to build the initial dataset.\nFunding records released by federal and provincial funding agencies. These include project titles, plain-language summaries, names of principal investigators and institutional hosts, and partner organizations. Funding records are the primary way an initiative first enters the dataset, since a funded project is identifiable independent of whether it has produced any publications yet.\nOpenAlex, queried in two ways: by a set of metaresearch-related topic IDs drawn from OpenAlex’s own topic taxonomy, and by authors’ Canadian affiliations. Where a matching work has full text available, it is processed with GROBID, an open-source tool for parsing structured data from research articles, to extract information typically found in acknowledgements and funding disclosure sections: funding sources and relationships with umbrella organizations that supported the work.",
     "crumbs": [
-      "Supplementary",
-      "Pipeline"
+      "Data Sources, Model, and Pipeline"
     ]
   },
   {
-    "objectID": "proposal.html",
-    "href": "proposal.html",
-    "title": "A Directory of Canadian Metaresearchers",
-    "section": "",
-    "text": "[1] Metaresearch in Canada has no single institutional home. It is practiced under a range of different banners — metascience, scientometrics, science and technology studies, research integrity, scholarly communication, open science — by people situated across universities, libraries, granting agencies, and independent community infrastructure projects, each with their own disciplinary training, professional incentives, and working assumptions about what counts as legitimate evidence. This fragmentation is not just an inconvenience for anyone trying to survey the field; it actively shapes what gets recognized as metaresearch at all. A researcher publishing bibliometric analyses in a well-indexed journal and a research data manager documenting institutional data governance practices in a technical report may be doing recognizably related work without either being aware of the other, without shared venues to encounter each other’s output, and without a common vocabulary to describe what they have in common. This project builds a directory of the people who make up this landscape, deliberately structured to reveal its actual diversity rather than whatever subset happens to be easiest to find through a single database or a single disciplinary lens.",
+    "objectID": "pipeline.html#two-phase-construction",
+    "href": "pipeline.html#two-phase-construction",
+    "title": "Data Sources, Model, and Pipeline",
+    "section": "Two-phase construction",
+    "text": "Two-phase construction\nThe directory is constructed in two phases.\n\nPhase 1: identification and collection\nThe first phase identifies, locates, and assembles information describing each initiative, producing a base dataset that is then enriched.\nFunding records are enriched by locating each initiative’s official web pages and appending rosters of connected individuals. In parallel, OpenAlex records are processed as described above.\nNames of individuals and initiatives logged from each source are matched by string similarity and by other identifiers where available (ORCID, email address), and matches are merged into a single record. Records that don’t match anything else prompt a manual query to locate additional information.\nThe outcome of this phase is a comprehensive dataset comprising: metaresearch initiatives, the works deriving from them, the people who produced that work, their institutional and disciplinary homes, and the sources from which they obtained financial support.\n\n\nPhase 2: analysis\nEach record from Phase 1 is explicitly linked to textual resources connected to it, including project web pages and scholarly outputs. The second phase analyzes these materials to determine specific aspects of metascience associated with each initiative.\nTopic modelling and targeted LLM queries are applied to the titles, abstracts, and full texts (where available) of each scholarly output, and to initiatives’ own descriptions of their objectives and activities as documented on their websites. Topics derive from how each initiative identifies itself, its methods, and its disciplinary orientation.\nThese topics may also be fitted into more established taxonomies, including those of Peterson and Panofsky (2023) and Rubin (2026); these are appended to initiative records as tags and categories, respectively.",
     "crumbs": [
-      "Proposal"
+      "Data Sources, Model, and Pipeline"
     ]
   },
   {
-    "objectID": "proposal.html#a-directory-of-people-institutions-and-initiatives-not-a-list-of-names",
-    "href": "proposal.html#a-directory-of-people-institutions-and-initiatives-not-a-list-of-names",
-    "title": "A Directory of Canadian Metaresearchers",
-    "section": "A directory of people, institutions, and initiatives, not a list of names",
-    "text": "A directory of people, institutions, and initiatives, not a list of names\n[2] The value of a directory like this comes from the relationships it can hold, not just the entries it contains. A flat list of names and self-descriptions would already be useful, but it would flatten exactly the structure that makes metaresearch in Canada worth mapping in the first place: who works where, who has moved between institutions, which people are contributing to the same initiatives or infrastructure projects without necessarily co-authoring anything together, and which disciplinary communities remain isolated from one another despite working on adjacent problems. The dataset is therefore built around three linked entities — people, institutions, and initiatives — with each person’s record connected to the institutions they have been affiliated with over time and, where identifiable, the community infrastructure projects, working groups, or initiatives they contribute to. This relational structure is what lets the directory support real exploration: following a person to their institution and from there to who else is affiliated with it, or following an initiative to everyone who has contributed to it regardless of whether that contribution took the form of a citable publication.\n[3] Each person’s record includes their published outputs, their own self-described research interests, and their institutional and disciplinary context over time. Self-description and published output are kept as genuinely distinct fields rather than collapsed into a single profile, because the two capture different things: a person’s own account of what they work on, and what a bibliometric record shows they have actually published. Where these diverge — a person who identifies as doing STS work but whose publications get algorithmically tagged as scientometrics, for instance — that divergence is preserved rather than resolved in favour of one or the other, since it says something real about the limits of treating publication metadata as equivalent to disciplinary identity. Entries are tagged using an existing published typology of metascience (Rubin 2026), adapted as a shared vocabulary across the directory so that people working under different institutional banners can still be found under a common set of terms.\n[4] The deliverable is an openly licensed dataset, structured to preserve these relationships, released alongside a public code repository and a dated register naming the specific populations, disciplinary traditions, and institutional contexts the directory is known to under-represent.",
+    "objectID": "pipeline.html#data-model",
+    "href": "pipeline.html#data-model",
+    "title": "Data Sources, Model, and Pipeline",
+    "section": "Data model",
+    "text": "Data model\nPhase 1 and Phase 2 together populate three kinds of information, linked to one another:\n\nInitiatives — the anchor record for each identified effort: its name, institutional or funding host, and connected textual resources (web pages, scholarly outputs).\nPeople — individuals connected to an initiative, drawn from principal investigator and roster information, with institutional and disciplinary affiliations and matched across sources by identifier or string similarity.\nWorks — scholarly outputs and other textual resources deriving from an initiative, carrying the tags and categories assigned during Phase 2’s topic modelling and taxonomy fitting.",
     "crumbs": [
-      "Proposal"
+      "Data Sources, Model, and Pipeline"
     ]
   },
   {
-    "objectID": "proposal.html#building-the-directory",
-    "href": "proposal.html#building-the-directory",
-    "title": "A Directory of Canadian Metaresearchers",
-    "section": "Building the directory",
-    "text": "Building the directory\n[5] Because the aim is to find people rather than to analyze a fixed corpus of publications, retrieval is built to prioritize coverage over precision. The primary source is Google Scholar, retrieved via Publish or Perish, chosen for its reach into grey literature, conference proceedings, theses, and non-English or small/regional venues — exactly the kind of material through which someone doing genuine metaresearch work might be visible without ever appearing in a more narrowly curated index. OpenAlex, named as a suggested source in the call, is used as a structured cross-check and metadata-backfill layer: its author and institution identifiers support disambiguation and, critically, support tracing a person’s institutional affiliations over time, which is what makes the person-institution relational structure possible in the first place. OpenAlex’s own disambiguation and topic-tagging error rates are real and documented, and are treated as something to actively validate against rather than a reason to assume its structured identifiers are more reliable than they are. Which venues, disciplines, career stages, and institutional types count as part of this directory’s scope is decided and published before the main retrieval query runs, so the directory’s boundary is a documented decision rather than an artifact of whatever a single search happens to surface. Crossref fills metadata gaps in Scholar-derived records, and Publish or Perish’s practical constraints — no formal API, rate limits, CAPTCHA challenges tied to its underlying reliance on the Scholar web interface — are worked around through batched queries and checkpointing rather than avoided by abandoning Scholar as the primary source.\n[6] Records retrieved one publication at a time are restructured around the person, using OpenAlex author identifiers and ORCID, where available, to resolve ambiguous name strings and to reconstruct a person’s institutional history across multiple affiliations. A sampled subset is manually reviewed and the estimated disambiguation error rate is reported rather than treated as solved. Initiative-level relationships — which community infrastructure projects, working groups, or collaborative platforms a person contributes to — are identified where publicly documented (project websites, acknowledgements, contributor lists) and linked into the same relational structure as institutional affiliation, though this layer is necessarily less complete than the person and institution layers given how unevenly initiatives document their contributors. Self-described research interests are drawn only from ORCID biographies and academic or social media profiles that a person has themselves linked from ORCID or an institutional page, never from probabilistic matching against independently scraped lists, so that a person who has not linked an account is simply absent from that field rather than incorrectly matched into it on the basis of a name-string guess.",
+    "objectID": "pipeline.html#references",
+    "href": "pipeline.html#references",
+    "title": "Data Sources, Model, and Pipeline",
+    "section": "References",
+    "text": "References\nPeterson, David, and Aaron Panofsky. 2023. Metascience as a Scientific Social Movement. Minerva 61 (2): 147–74. https://doi.org/10.1007/s11024-023-09490-3.\nRubin, Mark. 2026. Six Types of Metascience. Blog post. Critical Metascience, June 17. https://markrubin.substack.com/p/contained-experiments-reproducibility.",
     "crumbs": [
-      "Proposal"
-    ]
-  },
-  {
-    "objectID": "proposal.html#validating-the-directory",
-    "href": "proposal.html#validating-the-directory",
-    "title": "A Directory of Canadian Metaresearchers",
-    "section": "Validating the directory",
-    "text": "Validating the directory\n[7] Coverage is checked against known reference lists — CARN/RECAR membership and related Canadian research-integrity and open-science networks — to estimate how much of the known population the directory actually captures. A random manual-review sample of retrieved records estimates the precision of the “Canadian metaresearcher” classification itself. Both Scholar’s and OpenAlex’s known data-quality issues — inconsistent metadata and weak disambiguation on Scholar’s side, disambiguation and topic-tagging error on OpenAlex’s side — are measured as sources of error in the directory rather than assumed away in either direction.",
-    "crumbs": [
-      "Proposal"
-    ]
-  },
-  {
-    "objectID": "proposal.html#openness-and-reproducibility",
-    "href": "proposal.html#openness-and-reproducibility",
-    "title": "A Directory of Canadian Metaresearchers",
-    "section": "Openness and reproducibility",
-    "text": "Openness and reproducibility\n[8] Retrieval queries, inclusion and exclusion criteria, disambiguation procedures, and the tag-vocabulary mapping are published as versioned, dated artifacts in a public repository, alongside the retrieval, enrichment, and analysis code itself. The dataset is openly licensed, with one explicit boundary: contact information collected for internal disambiguation is never included in the public release. Full-text-derived fields are included only where source licensing permits redistribution; where it does not, only derived tags are published, never excerpted text.",
-    "crumbs": [
-      "Proposal"
-    ]
-  },
-  {
-    "objectID": "proposal.html#who-this-directory-will-still-miss",
-    "href": "proposal.html#who-this-directory-will-still-miss",
-    "title": "A Directory of Canadian Metaresearchers",
-    "section": "Who this directory will still miss",
-    "text": "Who this directory will still miss\n[9] A directory built from indexed, formally published output will under-represent STS-style qualitative metaresearch, francophone scholarship, community-based and Indigenous research governance work, and practitioners — librarians, infrastructure specialists — whose contributions may never take the form of an indexed publication at all. Scholar’s broader reach partially mitigates this, which is why it is used as the primary source here, but it does not eliminate the underlying bias. “Canadian metaresearcher” is operationalized through institutional affiliation and geographic terms in text, which will miss diaspora researchers working on Canadian topics from abroad and may over-count short-term or visiting affiliations. The initiative-level relational layer, in particular, will be uneven: well-documented projects with clear contributor lists will be far better represented than informal or ad hoc collaborations that leave no public trace. These specific gaps, and others identified as the work proceeds, are compiled into a dated register published alongside the dataset and updated as the directory develops.",
-    "crumbs": [
-      "Proposal"
-    ]
-  },
-  {
-    "objectID": "proposal.html#work-plan",
-    "href": "proposal.html#work-plan",
-    "title": "A Directory of Canadian Metaresearchers",
-    "section": "Work plan",
-    "text": "Work plan\n[10] Assuming notification on August 1, 2026 against an October 27–29, 2026 conference date, roughly twelve weeks are available. Weeks 1–3: publish inclusion and exclusion criteria, run the primary Google Scholar retrieval via Publish or Perish, cross-check against OpenAlex, enrich via Crossref. Weeks 3–5: restructure records around people and reconstruct institutional affiliation histories, with a sampled manual review of disambiguation. Weeks 5–8: build the self-described and tag-based fields in parallel, kept distinct, and identify initiative-level relationships where publicly documented. Weeks 8–10: apply the tag vocabulary consistently across entries, run coverage and precision validation, compile the known-gaps register. Weeks 10–12: finalize the public dataset and code release, complete documentation, prepare the plenary presentation. Deeper analysis of the initiative layer — funding relationships, project governance structures — stays out of the October deliverable and is left for future work, once the person and institution layers are in place to attach it to.",
-    "crumbs": [
-      "Proposal"
+      "Data Sources, Model, and Pipeline"
     ]
   },
   {
@@ -96,197 +54,76 @@
     "href": "index.html",
     "title": "Canadian Metaresearch Data Challenge",
     "section": "",
-    "text": "This is a submission for the Canadian Metaresearch Data Challenge, part of the 2nd Canadian Open Science Conference (University of Ottawa, October 27–29, 2026). The call asks for a methodology to construct an open, reproducible, and inclusive dataset capturing the Canadian metaresearch landscape.\nMy proposal is a directory of Canadian metaresearchers, structured around people, the institutions they’re affiliated with, and the initiatives they contribute to — built to highlight the field’s actual diversity. The database is built up from a variety of scholarly and para-scholarly resources, including scientific papers, scholarly metadata, social media profiles, and content scraped from faculty webpages. Records are organized using established typologies and self-described tags.",
+    "text": "This is the submission for the Canadian Metaresearch Data Challenge, part of the 2nd Canadian Open Science Conference (University of Ottawa, October 27–29, 2026). The call asks for a methodology to construct an open, reproducible, and inclusive dataset capturing the Canadian metaresearch landscape.\nThe proposal builds a directory of Canadian metaresearch initiatives, the people who drive them, and the works that result. It draws on funding records and OpenAlex, constructed in two phases: identifying and collecting information about each initiative, then analyzing the resulting materials to characterize each initiative’s methods and disciplinary orientation.\nThe data sources, model, and pipeline page expands on the two sources, the two-phase construction process, and the resulting data model summarized in the proposal.",
     "crumbs": [
       "Overview"
     ]
   },
   {
-    "objectID": "index.html#outcomes-and-implications",
-    "href": "index.html#outcomes-and-implications",
-    "title": "Canadian Metaresearch Data Challenge",
-    "section": "Outcomes and implications",
-    "text": "Outcomes and implications\nWhat can this dataset do?",
-    "crumbs": [
-      "Overview"
-    ]
-  },
-  {
-    "objectID": "index.html#about-the-maintainer",
-    "href": "index.html#about-the-maintainer",
-    "title": "Canadian Metaresearch Data Challenge",
-    "section": "About the maintainer",
-    "text": "About the maintainer",
-    "crumbs": [
-      "Overview"
-    ]
-  },
-  {
-    "objectID": "index.html#about-this-site",
-    "href": "index.html#about-this-site",
-    "title": "Canadian Metaresearch Data Challenge",
-    "section": "About this site",
-    "text": "About this site\nThe data model page lays out how the directory is structured: one JSON record per person, institution, and initiative, cross-referenced by ID. The pipeline page traces how the four sources actually flow into those files. The data sources page describes each source and tool used in the pipeline — Google Scholar, OpenAlex, Publish or Perish, Crossref, ORCID — on its own terms. The rendering page shows the processes involved in visually representing the information and producing data that can be fed into analytical protocols.\nThe work plan detail page gives the full phase-by-phase breakdown behind the proposal’s compressed timeline paragraph.\nThe entire project is in the public domain under a CC0 license. The text and code can be reviewed at github.com/zackbatist/CMDC.",
-    "crumbs": [
-      "Overview"
-    ]
-  },
-  {
-    "objectID": "data-sources.html",
-    "href": "data-sources.html",
-    "title": "Data sources",
+    "objectID": "TODO.html",
+    "href": "TODO.html",
+    "title": "To do",
     "section": "",
-    "text": "Google Scholar indexes an unusually broad range of material relative to curated bibliographic databases — journal articles, but also theses, conference proceedings, preprints, institutional repository items, and grey literature that formal indexes often exclude. It has no public API; there is no formal contract for automated access, and Google has no obligation to keep the interface or its underlying ranking stable. Retrieval for this project goes through Publish or Perish (see below) rather than direct scraping, but the underlying access model is still the Scholar web interface, with the rate limits and CAPTCHA challenges that come with that.\nScholar does not assign stable identifiers to authors or institutions. Records come back as name strings, which means disambiguation (is this “J. Smith” the same J. Smith as three records over) has to be handled downstream, either through cross-referencing against ORCID/OpenAlex or through manual review.",
-    "crumbs": [
-      "Supplementary",
-      "Data Sources"
-    ]
+    "text": "To do\nIf selected, before Phase 1 begins:\n\nConfirm which metaresearch-related topic IDs from OpenAlex’s topic taxonomy will be used.\nConfirm which federal and provincial funding agencies’ records are in scope, and whether bulk downloads exist for each (confirmed for CIHR; not yet checked for others).\nDecide the specific string-similarity and identifier-matching thresholds for Phase 1’s deduplication step."
   },
   {
-    "objectID": "data-sources.html#google-scholar",
-    "href": "data-sources.html#google-scholar",
-    "title": "Data sources",
+    "objectID": "proposal.html",
+    "href": "proposal.html",
+    "title": "A Directory of Canadian Metaresearch Initiatives",
     "section": "",
-    "text": "Google Scholar indexes an unusually broad range of material relative to curated bibliographic databases — journal articles, but also theses, conference proceedings, preprints, institutional repository items, and grey literature that formal indexes often exclude. It has no public API; there is no formal contract for automated access, and Google has no obligation to keep the interface or its underlying ranking stable. Retrieval for this project goes through Publish or Perish (see below) rather than direct scraping, but the underlying access model is still the Scholar web interface, with the rate limits and CAPTCHA challenges that come with that.\nScholar does not assign stable identifiers to authors or institutions. Records come back as name strings, which means disambiguation (is this “J. Smith” the same J. Smith as three records over) has to be handled downstream, either through cross-referencing against ORCID/OpenAlex or through manual review.",
+    "text": "Metaresearch in Canada spans different banners, including metascience, scientometrics, science and technology studies, and science reform advocacy. Initiatives occur in a variety of institutional contexts, including universities, libraries, granting agencies, and independent community infrastructure projects, and vary in scale, objectives, methods, and disciplinary orientation. This diverse research landscape is undoubtedly beneficial to obtaining a well-rounded understanding of science, but no platform currently exists to bridge the work being done across the field.\nThis project, which systematically documents Canadian metaresearch initiatives, including the people who drive the work and the outcomes that emerge from them, is the first effort of its kind. The goal is to produce an original, complete, and authoritative record that supports (1) discovery of like-minded and alternative perspectives to topics of overlapping concern, (2) analysis of how the field has developed and continues to operate and its various forms, and (3) advocacy for enhanced support so that we may continue to pursue our mutual interest in understanding and improving science.",
     "crumbs": [
-      "Supplementary",
-      "Data Sources"
+      "Proposal"
     ]
   },
   {
-    "objectID": "data-sources.html#openalex",
-    "href": "data-sources.html#openalex",
-    "title": "Data sources",
-    "section": "OpenAlex",
-    "text": "OpenAlex\nOpenAlex is a large, open bibliographic database maintained by OurResearch, built as a successor to Microsoft Academic Graph. It’s accessed through a documented, versioned REST API — no scraping, no rate-limit brinkmanship, results returned as structured JSON. It assigns persistent IDs to works, authors, institutions, and concepts, and it’s the source explicitly named (as a suggestion, not a requirement) in the call for this challenge.\nThose IDs make some engineering steps easier, but they’re not error-free: author and institution disambiguation in OpenAlex has known, documented mistakes, and its topic/concept classification has changed structure across versions in ways that make it a less stable basis for longitudinal or reproducible classification than it looks at first glance. Coverage also varies by field and region — it does not close the long-tail gap that Scholar’s breadth partially fills.\nFor this project, OpenAlex is used as a structured cross-check and metadata-backfill layer alongside the primary Scholar-based retrieval — its IDs are useful for disambiguation, with the caveat above stated plainly rather than assumed away.",
-    "crumbs": [
-      "Supplementary",
-      "Data Sources"
-    ]
-  },
-  {
-    "objectID": "data-sources.html#crossref",
-    "href": "data-sources.html#crossref",
-    "title": "Data sources",
-    "section": "Crossref",
-    "text": "Crossref\nCrossref is the DOI registration agency for scholarly publishing, and its metadata API is used here as an enrichment layer — filling in author names, affiliations, and other metadata gaps in records retrieved primarily from Scholar. It’s a well-established, documented API with broad coverage of DOI-registered content, though (like any source relying on publisher-submitted metadata) completeness and accuracy vary by publisher and venue.",
-    "crumbs": [
-      "Supplementary",
-      "Data Sources"
-    ]
-  },
-  {
-    "objectID": "data-sources.html#orcid",
-    "href": "data-sources.html#orcid",
-    "title": "Data sources",
-    "section": "ORCID",
-    "text": "ORCID\nORCID provides persistent, researcher-controlled identifiers along with self-maintained biographical and affiliation information. It’s used here for two purposes: as a disambiguation cross-check alongside OpenAlex author IDs, and as one of the sources for the self-described research-interest layer, where a researcher has populated their ORCID biography themselves. Coverage depends entirely on whether a given researcher has an ORCID and keeps it updated — it’s a high-trust, low-coverage source relative to Scholar or OpenAlex.",
-    "crumbs": [
-      "Supplementary",
-      "Data Sources"
-    ]
-  },
-  {
-    "objectID": "data-sources.html#social-media-profiles",
-    "href": "data-sources.html#social-media-profiles",
-    "title": "Data sources",
-    "section": "Social media profiles",
-    "text": "Social media profiles",
-    "crumbs": [
-      "Supplementary",
-      "Data Sources"
-    ]
-  },
-  {
-    "objectID": "data-sources.html#faculty-and-project-websites",
-    "href": "data-sources.html#faculty-and-project-websites",
-    "title": "Data sources",
-    "section": "Faculty and project websites",
-    "text": "Faculty and project websites",
-    "crumbs": [
-      "Supplementary",
-      "Data Sources"
-    ]
-  },
-  {
-    "objectID": "workplan.html",
-    "href": "workplan.html",
-    "title": "Work plan detail",
+    "objectID": "proposal.html#objectives",
+    "href": "proposal.html#objectives",
+    "title": "A Directory of Canadian Metaresearch Initiatives",
     "section": "",
-    "text": "Assuming notification on August 1, 2026 against an October 27–29, 2026 conference date, roughly twelve weeks are available. This is the fuller phase breakdown behind the compressed paragraph in the proposal.\nNote that the author already has extensive experience scraping and extracting structured information from scholarly metadata, full texts of research outputs, and unstructured text from faculty web pages. Much of the data retrieval and processing pipeline is derived from his similar work on open-archaeo.info and the BibVik project.",
+    "text": "Metaresearch in Canada spans different banners, including metascience, scientometrics, science and technology studies, and science reform advocacy. Initiatives occur in a variety of institutional contexts, including universities, libraries, granting agencies, and independent community infrastructure projects, and vary in scale, objectives, methods, and disciplinary orientation. This diverse research landscape is undoubtedly beneficial to obtaining a well-rounded understanding of science, but no platform currently exists to bridge the work being done across the field.\nThis project, which systematically documents Canadian metaresearch initiatives, including the people who drive the work and the outcomes that emerge from them, is the first effort of its kind. The goal is to produce an original, complete, and authoritative record that supports (1) discovery of like-minded and alternative perspectives to topics of overlapping concern, (2) analysis of how the field has developed and continues to operate and its various forms, and (3) advocacy for enhanced support so that we may continue to pursue our mutual interest in understanding and improving science.",
     "crumbs": [
-      "Work Plan Detail"
+      "Proposal"
     ]
   },
   {
-    "objectID": "workplan.html#weeks-13-retrieval-and-sampling-frame",
-    "href": "workplan.html#weeks-13-retrieval-and-sampling-frame",
-    "title": "Work plan detail",
-    "section": "Weeks 1–3 — retrieval and sampling frame",
-    "text": "Weeks 1–3 — retrieval and sampling frame\nPublish inclusion and exclusion criteria as a standalone, dated document before running the main query — which venues, disciplines, career stages, and institutional types count as “in scope” — so the boundary isn’t fitted after the fact to whatever the query happens to return.\nRun the primary Google Scholar query and retrieve records via Publish or Perish, batching queries and building in retry/checkpointing to work around PoP’s rate-limit and session-based access constraints.\nCross-check against the OpenAlex API (institution-based: Canadian institution IDs; content-based: Canada-related affiliation and geographic terms) to backfill missing metadata and provide a second, independently-sourced disambiguation signal — not as the primary sampling frame.\nCrossref enrichment for missing author/affiliation metadata where Scholar-derived records are incomplete.",
+    "objectID": "proposal.html#methodology-and-data-model",
+    "href": "proposal.html#methodology-and-data-model",
+    "title": "A Directory of Canadian Metaresearch Initiatives",
+    "section": "Methodology and Data Model",
+    "text": "Methodology and Data Model\nThe core activity for this project is development and implementation of a pipeline to query, record, normalize, de-duplicate, and validate information about metascience initiatives across Canada. This proposal summarizes a more detailed technical account of the data model, sources, and processing pipeline, which is maintained at zackbatist.info/CMDC. Overall, the pipeline draws on the author’s experience building open-archaeo.info, a comprehensive listing of open source research software in archaeology used to track developments in that field, and his technical experience retrieving and processing aggregated scholarly metadata, which was most significantly applied for the BibVik project.\nThe directory is constructed in two phases: (1) identifying, locating, and assembling relevant information pertaining to and describing each initiative; and (2) analyzing texts that are either produced by each initiative or that describe their own activities to document relevant facets or characteristics.\nThe initial collection phase relies on funding records released by federal and provincial funding agencies and OpenAlex’s index of scholarly works to develop a base dataset that will be subsequently enriched. Funding records include project titles, plain-language summaries, names of principal investigators and institutional hosts, and partner organizations. These records are enhanced by locating official web pages and appending rosters of connected individuals. In parallel, OpenAlex is queried by filtering for a set of metaresearch-related topic IDs obtained from OpenAlex’s own topic taxonomy and by authors’ Canadian affiliations. When full texts are available, scholarly works are processed using GROBID, an open-source tool for parsing structured data from research articles, to extract additional information about authors’ funding sources and relationships with umbrella organizations that supported the work — information that is typically available in acknowledgements and funding disclosure sections. Names of individuals and initiatives logged from each data source are matched by string similarity and use of other matching identifiers (e.g., ORCID, email address), and matches are merged into a single record. Unmatched records prompt manual query to locate additional information about those initiatives and their activities. The outcome of the first phase is a comprehensive dataset comprising information about metaresearch initiatives, works deriving from those initiatives, the people who produced the work, their institutional and disciplinary homes, and the sources from which they obtained financial support.\nEach record is also explicitly linked to textual resources, including project web pages and scholarly outputs, and the second phase analyzes these materials to determine specific aspects of metascience associated with each initiative. Topic modelling and targeted LLM queries are applied to the titles, abstracts and full texts (when available) of each scholarly output and to descriptions of initiatives’ objectives and activities that are documented on their own websites. Topics therefore derive from how each initiative identifies itself, its methods, and its disciplinary orientation, and topics may also be fitted into more authoritative taxonomies such as those produced by Peterson and Panofsky (2023) and Rubin (2026); these are appended to initiative records as tags and categories, respectively.\nThe author will then analyze the dataset to uncover tendencies across the Canadian metaresearch landscape, similarly to his work using open-archaeo to map collaborations in the research software development ecosystem (Batist and Roe 2024). This will be published in the Journal of Research on Research.",
     "crumbs": [
-      "Work Plan Detail"
+      "Proposal"
     ]
   },
   {
-    "objectID": "workplan.html#weeks-35-disambiguation-and-restructuring",
-    "href": "workplan.html#weeks-35-disambiguation-and-restructuring",
-    "title": "Work plan detail",
-    "section": "Weeks 3–5 — disambiguation and restructuring",
-    "text": "Weeks 3–5 — disambiguation and restructuring\nCollapse paper-centred records into researcher-centred records using OpenAlex author IDs and ORCID, where available, as cross-checking identifiers for ambiguous name strings.\nWhere disambiguation is uncertain, apply a documented manual-review procedure on a sampled subset, and report the estimated disambiguation error rate rather than presenting merged records as ground truth.",
+    "objectID": "proposal.html#anticipated-applications-and-impact",
+    "href": "proposal.html#anticipated-applications-and-impact",
+    "title": "A Directory of Canadian Metaresearch Initiatives",
+    "section": "Anticipated Applications and Impact",
+    "text": "Anticipated Applications and Impact\nNo comparable directory of Canadian metaresearch initiatives currently exists. As a discovery tool, it will supplement the informal, ad hoc awareness of each other’s work that the field currently depends on, and help establish cross-disciplinary collaborations.\nAdditionally, funders and advocacy organizations, such as CaRN/RECAR or the Tanenbaum Open Science Institute, may use it to ascertain the full landscape of metascience activity and target their activities to fill observed gaps. This is crucial for fostering connections that would not otherwise be made and for elevating under-represented communities, such as francophone or Indigenous-led scholarship, as well as work being done in professional contexts outside university settings such as libraries and hospitals.",
     "crumbs": [
-      "Work Plan Detail"
+      "Proposal"
     ]
   },
   {
-    "objectID": "workplan.html#weeks-58-two-enrichment-layers-built-in-parallel",
-    "href": "workplan.html#weeks-58-two-enrichment-layers-built-in-parallel",
-    "title": "Work plan detail",
-    "section": "Weeks 5–8 — two enrichment layers, built in parallel",
-    "text": "Weeks 5–8 — two enrichment layers, built in parallel\nSelf-described layer: extract self-described research interests from ORCID biographies and academic/social media profiles that researchers have themselves linked from ORCID or an institutional page. No probabilistic cross-platform name matching.\nInstitutional history: reconstruct each person’s affiliations over time using OpenAlex institution IDs linked to author records, so the directory can support institution-to-people traversal, not just person-level lookup.\nInitiative relationships: identify community infrastructure projects, working groups, or collaborative platforms a person contributes to, where publicly documented (project websites, acknowledgements, contributor lists). Necessarily less complete than the person and institution layers.\nTag layer: LLM- or ML-based keyword and context extraction from abstracts and, where licensing permits, full text. Check access/rights before extraction, since full-text scraping raises its own openness questions if the resulting dataset can’t legally be shared.\nKept as distinct fields throughout — never merged into a single profile.",
+    "objectID": "proposal.html#openness-transparency-and-reproducibility",
+    "href": "proposal.html#openness-transparency-and-reproducibility",
+    "title": "A Directory of Canadian Metaresearch Initiatives",
+    "section": "Openness, Transparency, and Reproducibility",
+    "text": "Openness, Transparency, and Reproducibility\nAll code, documentation, and analysis are published as versioned, dated, plain text artifacts in a public repository and released under an open license. This includes the retrieval queries, inclusion and exclusion criteria, bilingual key term list, disambiguation procedures, and tag-vocabulary mapping, alongside the retrieval, enrichment, and analysis code itself. This ensures that the full pipeline can be reused or audited by any third party. Contact information collected during disambiguation is used only to distinguish people who share a name and is stripped before publication; it never appears in the public release.",
     "crumbs": [
-      "Work Plan Detail"
+      "Proposal"
     ]
   },
   {
-    "objectID": "workplan.html#weeks-810-topic-modeling-calibration-validation",
-    "href": "workplan.html#weeks-810-topic-modeling-calibration-validation",
-    "title": "Work plan detail",
-    "section": "Weeks 8–10 — topic modeling, calibration, validation",
-    "text": "Weeks 8–10 — topic modeling, calibration, validation\nTopic modeling over the algorithmic keyword layer, calibrated against an existing published typology of metascience (Rubin’s six types) rather than left as unlabeled clusters.\nCoverage check against known reference lists (CARN/RECAR membership, related Canadian research-integrity and open-science networks) to estimate recall.\nPrecision check via manual review of a random sample to estimate the false-positive rate in the “Canadian metaresearcher” classification.\nCompile the dated “known gaps” register — specific populations or traditions the dataset is likely under-representing, and why.",
+    "objectID": "proposal.html#feasibility-and-work-plan",
+    "href": "proposal.html#feasibility-and-work-plan",
+    "title": "A Directory of Canadian Metaresearch Initiatives",
+    "section": "Feasibility and Work Plan",
+    "text": "Feasibility and Work Plan\nAssuming notification of results on August 1 against an October 27 conference date, roughly twelve weeks are available. The core deliverable is initiative discovery and deduplication, which the author has extensive experience with from his work on the BibVik project. The main technical risk is the extraction of data released by funding agencies, which depends on how consistently that source is structured.\nInitiative discovery and deduplication across the two sources (weeks 1 through 6) are the largest share of the work and the deliverable’s primary focus. Additional capture of people and publications named in each initiative’s own source material (weeks 6 through 8) follows directly from the initiative discovery layer. Validation of coverage (weeks 8 through 10) depends on the first two phases being substantially complete. Public release, documentation and preliminary analysis (weeks 10 through 12) depend on validation being complete. A more comprehensive analysis worthy of a peer-reviewed article will incorporate feedback received during the conference.",
     "crumbs": [
-      "Work Plan Detail"
-    ]
-  },
-  {
-    "objectID": "workplan.html#weeks-1012-documentation-packaging-presentation",
-    "href": "workplan.html#weeks-1012-documentation-packaging-presentation",
-    "title": "Work plan detail",
-    "section": "Weeks 10–12 — documentation, packaging, presentation",
-    "text": "Weeks 10–12 — documentation, packaging, presentation\nFinalize the open dataset release, with raw scraped contact information (e.g. email addresses) excluded from the public release — used only internally for disambiguation.\nWrite up methodology documentation sufficient for independent reproduction; finalize the code repository.\nPrepare the thirty-minute plenary presentation.",
-    "crumbs": [
-      "Work Plan Detail"
-    ]
-  },
-  {
-    "objectID": "workplan.html#explicit-future-work",
-    "href": "workplan.html#explicit-future-work",
-    "title": "Work plan detail",
-    "section": "Explicit future work",
-    "text": "Explicit future work\nInitiative-level data — funding relationships, infrastructure projects, community organizations — is named directly as future work, not folded into the October deliverable.",
-    "crumbs": [
-      "Work Plan Detail"
-    ]
-  },
-  {
-    "objectID": "data-model.html",
-    "href": "data-model.html",
-    "title": "Data model",
-    "section": "",
-    "text": "The directory is built as a series of flat text files: no database, no server, just JSON records that can be transformed and rendered using a static site generator and other extended data processing pipelines. This keeps the whole dataset diffable, versionable, and inspectable with nothing more than a text editor, and it means anyone downloading the repository gets data in full.\nThree key files anchor the dataset: people, publications, and initiatives.\npeople.json — one object per person: an ID, display name, ORCID if known, titles, affiliations, categories and tags. Contributions to publications and initiatives are inferred through backlinks from those respective data sources.\npublications.json — one object per publication: a standard biblatex array with additional information extracted from the text, including topics of concern and relationships with initiatives.\ninitiatives.json — one object per initiative: an ID, name, URL, institutional host, and membership roster.",
-    "crumbs": [
-      "Supplementary",
-      "Data Model"
+      "Proposal"
     ]
   }
 ]

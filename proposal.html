@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en-CA" xml:lang="en-CA"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Zachary Batist">
+<meta name="author" content="Zachary Batist, McGill University">
 
-<title>A Directory of Canadian Metaresearchers – Canadian Metaresearch Data Challenge</title>
+<title>A Directory of Canadian Metaresearch Initiatives – Canadian Metaresearch Data Challenge</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -45,7 +45,12 @@ div.csl-indent {
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -56,8 +61,20 @@ div.csl-indent {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-15f0d6578829a96e327082df99881d44.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-d42ecfdc19a5eb83045caa16c514f7c9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -72,20 +89,17 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
- 
-<!-- CSS added by lua-filter 'count-para' -->
-<style>
-.paragraph-number { 
-  float: left;
-  margin-left: -5em;
-  width: 4.5em;
-  text-align: right;
-  color: grey;
-  font-size: x-small;
-  padding-top: 5px;
+<style type="text/css">
+h1.hide {
+  display: none;
 }
+#quarto-document-content {
+    text-align: justify;
+  }
+  .abstract {
+    text-align: justify;
+  }
 </style>
-    
 
 
 <link rel="stylesheet" href="assets/styles.css">
@@ -110,7 +124,7 @@ div.csl-indent {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-center sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
       <a href="./index.html" class="sidebar-logo-link">
       </a>
       </div>
@@ -130,43 +144,8 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./workplan.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Work Plan Detail</span></a>
-  </div>
-</li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Supplementary</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./data-model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Model</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./pipeline.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Pipeline</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./data-sources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data Sources</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="https://github.com/zackbatist/CMDC" class="sidebar-item-text sidebar-link">
- <span class="menu-text">GitHub</span></a>
+ <span class="menu-text">Data Sources, Model, and Pipeline</span></a>
   </div>
 </li>
     </ul>
@@ -181,28 +160,21 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">A Directory of Canadian Metaresearchers</h1>
+<h1 class="title">A Directory of Canadian Metaresearch Initiatives</h1>
 <p class="subtitle lead">Canadian Metaresearch Data Challenge — 2nd Canadian Open Science Conference</p>
 </div>
 
 
-<div class="quarto-title-meta-author">
-  <div class="quarto-title-meta-heading">Author</div>
-  <div class="quarto-title-meta-heading">Affiliation</div>
-  
-    <div class="quarto-title-meta-contents">
-    <p class="author"><a href="https://zackbatist.info">Zachary Batist</a> <a href="mailto:zachary.batist@mcgill.ca" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0000-0003-0435-508X" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
-  </div>
-  <div class="quarto-title-meta-contents">
-        <p class="affiliation">
-            McGill University
-          </p>
-      </div>
-  </div>
 
 <div class="quarto-title-meta">
 
-      
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Zachary Batist, McGill University </p>
+          </div>
+  </div>
+    
   
     
   </div>
@@ -212,41 +184,49 @@ div.csl-indent {
 </header>
 
 
-<p><span id="1" class="paragraph-number">[1]</span> Metaresearch in Canada has no single institutional home. It is practiced under a range of different banners — metascience, scientometrics, science and technology studies, research integrity, scholarly communication, open science — by people situated across universities, libraries, granting agencies, and independent community infrastructure projects, each with their own disciplinary training, professional incentives, and working assumptions about what counts as legitimate evidence. This fragmentation is not just an inconvenience for anyone trying to survey the field; it actively shapes what gets recognized as metaresearch at all. A researcher publishing bibliometric analyses in a well-indexed journal and a research data manager documenting institutional data governance practices in a technical report may be doing recognizably related work without either being aware of the other, without shared venues to encounter each other’s output, and without a common vocabulary to describe what they have in common. This project builds a directory of the people who make up this landscape, deliberately structured to reveal its actual diversity rather than whatever subset happens to be easiest to find through a single database or a single disciplinary lens.</p>
-<section id="a-directory-of-people-institutions-and-initiatives-not-a-list-of-names" class="level2">
-<h2 class="anchored" data-anchor-id="a-directory-of-people-institutions-and-initiatives-not-a-list-of-names">A directory of people, institutions, and initiatives, not a list of names</h2>
-<p><span id="2" class="paragraph-number">[2]</span> The value of a directory like this comes from the relationships it can hold, not just the entries it contains. A flat list of names and self-descriptions would already be useful, but it would flatten exactly the structure that makes metaresearch in Canada worth mapping in the first place: who works where, who has moved between institutions, which people are contributing to the same initiatives or infrastructure projects without necessarily co-authoring anything together, and which disciplinary communities remain isolated from one another despite working on adjacent problems. The dataset is therefore built around three linked entities — people, institutions, and initiatives — with each person’s record connected to the institutions they have been affiliated with over time and, where identifiable, the community infrastructure projects, working groups, or initiatives they contribute to. This relational structure is what lets the directory support real exploration: following a person to their institution and from there to who else is affiliated with it, or following an initiative to everyone who has contributed to it regardless of whether that contribution took the form of a citable publication.</p>
-<p><span id="3" class="paragraph-number">[3]</span> Each person’s record includes their published outputs, their own self-described research interests, and their institutional and disciplinary context over time. Self-description and published output are kept as genuinely distinct fields rather than collapsed into a single profile, because the two capture different things: a person’s own account of what they work on, and what a bibliometric record shows they have actually published. Where these diverge — a person who identifies as doing STS work but whose publications get algorithmically tagged as scientometrics, for instance — that divergence is preserved rather than resolved in favour of one or the other, since it says something real about the limits of treating publication metadata as equivalent to disciplinary identity. Entries are tagged using an existing published typology of metascience <span class="citation" data-cites="rubin2026sixtypes">(<a href="#ref-rubin2026sixtypes" role="doc-biblioref">Rubin 2026</a>)</span>, adapted as a shared vocabulary across the directory so that people working under different institutional banners can still be found under a common set of terms.</p>
-<p><span id="4" class="paragraph-number">[4]</span> The deliverable is an openly licensed dataset, structured to preserve these relationships, released alongside a public code repository and a dated register naming the specific populations, disciplinary traditions, and institutional contexts the directory is known to under-represent.</p>
+<section id="objectives" class="level2">
+<h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
+<p>Metaresearch in Canada spans different banners, including metascience, scientometrics, science and technology studies, and science reform advocacy. Initiatives occur in a variety of institutional contexts, including universities, libraries, granting agencies, and independent community infrastructure projects, and vary in scale, objectives, methods, and disciplinary orientation. This diverse research landscape is undoubtedly beneficial to obtaining a well-rounded understanding of science, but no platform currently exists to bridge the work being done across the field.</p>
+<p>This project, which systematically documents Canadian metaresearch initiatives, including the people who drive the work and the outcomes that emerge from them, is the first effort of its kind. The goal is to produce an original, complete, and authoritative record that supports (1) discovery of like-minded and alternative perspectives to topics of overlapping concern, (2) analysis of how the field has developed and continues to operate and its various forms, and (3) advocacy for enhanced support so that we may continue to pursue our mutual interest in understanding and improving science.</p>
 </section>
-<section id="building-the-directory" class="level2">
-<h2 class="anchored" data-anchor-id="building-the-directory">Building the directory</h2>
-<p><span id="5" class="paragraph-number">[5]</span> Because the aim is to find people rather than to analyze a fixed corpus of publications, retrieval is built to prioritize coverage over precision. The primary source is Google Scholar, retrieved via Publish or Perish, chosen for its reach into grey literature, conference proceedings, theses, and non-English or small/regional venues — exactly the kind of material through which someone doing genuine metaresearch work might be visible without ever appearing in a more narrowly curated index. OpenAlex, named as a suggested source in the call, is used as a structured cross-check and metadata-backfill layer: its author and institution identifiers support disambiguation and, critically, support tracing a person’s institutional affiliations over time, which is what makes the person-institution relational structure possible in the first place. OpenAlex’s own disambiguation and topic-tagging error rates are real and documented, and are treated as something to actively validate against rather than a reason to assume its structured identifiers are more reliable than they are. Which venues, disciplines, career stages, and institutional types count as part of this directory’s scope is decided and published before the main retrieval query runs, so the directory’s boundary is a documented decision rather than an artifact of whatever a single search happens to surface. Crossref fills metadata gaps in Scholar-derived records, and Publish or Perish’s practical constraints — no formal API, rate limits, CAPTCHA challenges tied to its underlying reliance on the Scholar web interface — are worked around through batched queries and checkpointing rather than avoided by abandoning Scholar as the primary source.</p>
-<p><span id="6" class="paragraph-number">[6]</span> Records retrieved one publication at a time are restructured around the person, using OpenAlex author identifiers and ORCID, where available, to resolve ambiguous name strings and to reconstruct a person’s institutional history across multiple affiliations. A sampled subset is manually reviewed and the estimated disambiguation error rate is reported rather than treated as solved. Initiative-level relationships — which community infrastructure projects, working groups, or collaborative platforms a person contributes to — are identified where publicly documented (project websites, acknowledgements, contributor lists) and linked into the same relational structure as institutional affiliation, though this layer is necessarily less complete than the person and institution layers given how unevenly initiatives document their contributors. Self-described research interests are drawn only from ORCID biographies and academic or social media profiles that a person has themselves linked from ORCID or an institutional page, never from probabilistic matching against independently scraped lists, so that a person who has not linked an account is simply absent from that field rather than incorrectly matched into it on the basis of a name-string guess.</p>
+<section id="methodology-and-data-model" class="level2">
+<h2 class="anchored" data-anchor-id="methodology-and-data-model">Methodology and Data Model</h2>
+<p>The core activity for this project is development and implementation of a pipeline to query, record, normalize, de-duplicate, and validate information about metascience initiatives across Canada. This proposal summarizes a more detailed technical account of the data model, sources, and processing pipeline, which is maintained at <a href="https://zackbatist.info/CMDC">zackbatist.info/CMDC</a>. Overall, the pipeline draws on the author’s experience building <a href="https://open-archaeo.info/">open-archaeo.info</a>, a comprehensive listing of open source research software in archaeology used to track developments in that field, and his technical experience retrieving and processing aggregated scholarly metadata, which was most significantly applied for the <a href="https://zackbatist.info/BibVik/">BibVik</a> project.</p>
+<p>The directory is constructed in two phases: (1) identifying, locating, and assembling relevant information pertaining to and describing each initiative; and (2) analyzing texts that are either produced by each initiative or that describe their own activities to document relevant facets or characteristics.</p>
+<p>The initial collection phase relies on funding records released by federal and provincial funding agencies and OpenAlex’s index of scholarly works to develop a base dataset that will be subsequently enriched. Funding records include project titles, plain-language summaries, names of principal investigators and institutional hosts, and partner organizations. These records are enhanced by locating official web pages and appending rosters of connected individuals. In parallel, OpenAlex is queried by filtering for a set of metaresearch-related topic IDs obtained from OpenAlex’s own topic taxonomy and by authors’ Canadian affiliations. When full texts are available, scholarly works are processed using GROBID, an open-source tool for parsing structured data from research articles, to extract additional information about authors’ funding sources and relationships with umbrella organizations that supported the work — information that is typically available in acknowledgements and funding disclosure sections. Names of individuals and initiatives logged from each data source are matched by string similarity and use of other matching identifiers (e.g., ORCID, email address), and matches are merged into a single record. Unmatched records prompt manual query to locate additional information about those initiatives and their activities. The outcome of the first phase is a comprehensive dataset comprising information about metaresearch initiatives, works deriving from those initiatives, the people who produced the work, their institutional and disciplinary homes, and the sources from which they obtained financial support.</p>
+<p>Each record is also explicitly linked to textual resources, including project web pages and scholarly outputs, and the second phase analyzes these materials to determine specific aspects of metascience associated with each initiative. Topic modelling and targeted LLM queries are applied to the titles, abstracts and full texts (when available) of each scholarly output and to descriptions of initiatives’ objectives and activities that are documented on their own websites. Topics therefore derive from how each initiative identifies itself, its methods, and its disciplinary orientation, and topics may also be fitted into more authoritative taxonomies such as those produced by <span class="citation" data-cites="peterson2023">Peterson and Panofsky (<a href="#ref-peterson2023" role="doc-biblioref">2023</a>)</span> and <span class="citation" data-cites="rubin2026">Rubin (<a href="#ref-rubin2026" role="doc-biblioref">2026</a>)</span>; these are appended to initiative records as tags and categories, respectively.</p>
+<p>The author will then analyze the dataset to uncover tendencies across the Canadian metaresearch landscape, similarly to his work using open-archaeo to map collaborations in the research software development ecosystem <span class="citation" data-cites="batist2024">(<a href="#ref-batist2024" role="doc-biblioref">Batist and Roe 2024</a>)</span>. This will be published in the Journal of Research on Research.</p>
 </section>
-<section id="validating-the-directory" class="level2">
-<h2 class="anchored" data-anchor-id="validating-the-directory">Validating the directory</h2>
-<p><span id="7" class="paragraph-number">[7]</span> Coverage is checked against known reference lists — CARN/RECAR membership and related Canadian research-integrity and open-science networks — to estimate how much of the known population the directory actually captures. A random manual-review sample of retrieved records estimates the precision of the “Canadian metaresearcher” classification itself. Both Scholar’s and OpenAlex’s known data-quality issues — inconsistent metadata and weak disambiguation on Scholar’s side, disambiguation and topic-tagging error on OpenAlex’s side — are measured as sources of error in the directory rather than assumed away in either direction.</p>
+<section id="anticipated-applications-and-impact" class="level2">
+<h2 class="anchored" data-anchor-id="anticipated-applications-and-impact">Anticipated Applications and Impact</h2>
+<p>No comparable directory of Canadian metaresearch initiatives currently exists. As a discovery tool, it will supplement the informal, ad hoc awareness of each other’s work that the field currently depends on, and help establish cross-disciplinary collaborations.</p>
+<p>Additionally, funders and advocacy organizations, such as CaRN/RECAR or the Tanenbaum Open Science Institute, may use it to ascertain the full landscape of metascience activity and target their activities to fill observed gaps. This is crucial for fostering connections that would not otherwise be made and for elevating under-represented communities, such as francophone or Indigenous-led scholarship, as well as work being done in professional contexts outside university settings such as libraries and hospitals.</p>
 </section>
-<section id="openness-and-reproducibility" class="level2">
-<h2 class="anchored" data-anchor-id="openness-and-reproducibility">Openness and reproducibility</h2>
-<p><span id="8" class="paragraph-number">[8]</span> Retrieval queries, inclusion and exclusion criteria, disambiguation procedures, and the tag-vocabulary mapping are published as versioned, dated artifacts in a public repository, alongside the retrieval, enrichment, and analysis code itself. The dataset is openly licensed, with one explicit boundary: contact information collected for internal disambiguation is never included in the public release. Full-text-derived fields are included only where source licensing permits redistribution; where it does not, only derived tags are published, never excerpted text.</p>
+<section id="openness-transparency-and-reproducibility" class="level2">
+<h2 class="anchored" data-anchor-id="openness-transparency-and-reproducibility">Openness, Transparency, and Reproducibility</h2>
+<p>All code, documentation, and analysis are published as versioned, dated, plain text artifacts in a public repository and released under an open license. This includes the retrieval queries, inclusion and exclusion criteria, bilingual key term list, disambiguation procedures, and tag-vocabulary mapping, alongside the retrieval, enrichment, and analysis code itself. This ensures that the full pipeline can be reused or audited by any third party. Contact information collected during disambiguation is used only to distinguish people who share a name and is stripped before publication; it never appears in the public release.</p>
 </section>
-<section id="who-this-directory-will-still-miss" class="level2">
-<h2 class="anchored" data-anchor-id="who-this-directory-will-still-miss">Who this directory will still miss</h2>
-<p><span id="9" class="paragraph-number">[9]</span> A directory built from indexed, formally published output will under-represent STS-style qualitative metaresearch, francophone scholarship, community-based and Indigenous research governance work, and practitioners — librarians, infrastructure specialists — whose contributions may never take the form of an indexed publication at all. Scholar’s broader reach partially mitigates this, which is why it is used as the primary source here, but it does not eliminate the underlying bias. “Canadian metaresearcher” is operationalized through institutional affiliation and geographic terms in text, which will miss diaspora researchers working on Canadian topics from abroad and may over-count short-term or visiting affiliations. The initiative-level relational layer, in particular, will be uneven: well-documented projects with clear contributor lists will be far better represented than informal or ad hoc collaborations that leave no public trace. These specific gaps, and others identified as the work proceeds, are compiled into a dated register published alongside the dataset and updated as the directory develops.</p>
+<section id="feasibility-and-work-plan" class="level2">
+<h2 class="anchored" data-anchor-id="feasibility-and-work-plan">Feasibility and Work Plan</h2>
+<p>Assuming notification of results on August 1 against an October 27 conference date, roughly twelve weeks are available. The core deliverable is initiative discovery and deduplication, which the author has extensive experience with from his work on the BibVik project. The main technical risk is the extraction of data released by funding agencies, which depends on how consistently that source is structured.</p>
+<p>Initiative discovery and deduplication across the two sources (weeks 1 through 6) are the largest share of the work and the deliverable’s primary focus. Additional capture of people and publications named in each initiative’s own source material (weeks 6 through 8) follows directly from the initiative discovery layer. Validation of coverage (weeks 8 through 10) depends on the first two phases being substantially complete. Public release, documentation and preliminary analysis (weeks 10 through 12) depend on validation being complete. A more comprehensive analysis worthy of a peer-reviewed article will incorporate feedback received during the conference.</p>
 </section>
-<section id="work-plan" class="level2">
-<h2 class="anchored" data-anchor-id="work-plan">Work plan</h2>
-<p><span id="10" class="paragraph-number">[10]</span> Assuming notification on August 1, 2026 against an October 27–29, 2026 conference date, roughly twelve weeks are available. Weeks 1–3: publish inclusion and exclusion criteria, run the primary Google Scholar retrieval via Publish or Perish, cross-check against OpenAlex, enrich via Crossref. Weeks 3–5: restructure records around people and reconstruct institutional affiliation histories, with a sampled manual review of disambiguation. Weeks 5–8: build the self-described and tag-based fields in parallel, kept distinct, and identify initiative-level relationships where publicly documented. Weeks 8–10: apply the tag vocabulary consistently across entries, run coverage and precision validation, compile the known-gaps register. Weeks 10–12: finalize the public dataset and code release, complete documentation, prepare the plenary presentation. Deeper analysis of the initiative layer — funding relationships, project governance structures — stays out of the October deliverable and is left for future work, once the person and institution layers are in place to attach it to.</p>
+<section id="references" class="level2">
+
 
 
 
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-rubin2026sixtypes" class="csl-entry" role="listitem">
-Rubin, Mark. 2026. <span>“Six Types of Metascience.”</span> <a href="https://markrubin.substack.com/i/201262627/six-types-of-metascience" class="uri">https://markrubin.substack.com/i/201262627/six-types-of-metascience</a>.
+<div id="ref-batist2024" class="csl-entry" role="listitem">
+Batist, Zachary, and Joe Roe. 2024. <span>“Open Archaeology, Open Source? Collaborative Practices in an Emerging Community of Archaeological Software Engineers.”</span> <em>Internet Archaeology</em>, no. 67 (July). <a href="https://doi.org/10.11141/ia.67.13">https://doi.org/10.11141/ia.67.13</a>.
+</div>
+<div id="ref-peterson2023" class="csl-entry" role="listitem">
+Peterson, David, and Aaron Panofsky. 2023. <span>“Metascience as a Scientific Social Movement.”</span> <em>Minerva</em> 61 (2): 147–74. <a href="https://doi.org/10.1007/s11024-023-09490-3">https://doi.org/10.1007/s11024-023-09490-3</a>.
+</div>
+<div id="ref-rubin2026" class="csl-entry" role="listitem">
+Rubin, Mark. 2026. <span>“Six Types of Metascience.”</span> Blog post. Critical Metascience. June 17, 2026. <a href="https://markrubin.substack.com/p/critical-metascience-roundup-b87">https://markrubin.substack.com/p/critical-metascience-roundup-b87</a>.
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -322,7 +302,7 @@ Rubin, Mark. 2026. <span>“Six Types of Metascience.”</span> <a href="https:/
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/zackbatist\.info\/CMDC\/");
+        var filterRegex = new RegExp("https:\/\/zackbatist\.github\.io\/CMDC\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

@@ -1,1 +1,1 @@
-Sitemap: https://zackbatist.info/CMDC/sitemap.xml
+Sitemap: https://zackbatist.github.io/CMDC/sitemap.xml
