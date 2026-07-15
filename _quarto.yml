@@ -4,8 +4,10 @@ project:
 
 website:
   title: "Canadian Metaresearch Data Challenge"
-  navbar:
-    left:
+  sidebar:
+    style: docked
+    search: false
+    contents:
       - href: index.qmd
         text: Overview
       - href: proposal.qmd
@@ -18,8 +20,18 @@ format:
     theme: cosmo
     css: assets/styles.css
     toc: false
-  pdf:
-    documentclass: article
-    geometry: margin=1in
-    fontsize: 11pt
-    toc: false
+    grid:
+      body-width: 1000px
+      margin-width: 350px
+    include-in-header:
+      - text: |
+          <style type="text/css">
+          h1.hide {
+            display: none;
+          }
+          </style>
+  # pdf:
+  #   documentclass: article
+  #   geometry: margin=1in
+  #   fontsize: 11pt
+  #   toc: false
