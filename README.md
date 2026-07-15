@@ -1,10 +1,11 @@
 # Canadian Metaresearch Data Challenge
 
-A directory of Canadian metaresearchers, showcasing the field's diversity.
+Quarto website project.
 
-**To preview the site locally:**
+- `index.qmd` — overview/landing page.
+- `proposal.qmd` — the final submitted proposal.
+- `pipeline.qmd` — expanded detail on data sources, the two-phase construction pipeline, and the resulting data model, matching the submitted proposal.
 
-1. Download and install [Quarto](https://quarto.org/).
-2. Clone this repo and `cd` into it.
-3. Use `quarto preview`.
-4. Navigate to `localhost:7777` in your web browser.
+`quarto preview` or `quarto render` from the project root renders the site (HTML). A PDF version of the proposal is also produced (format set in the proposal's own front matter) and lands in `_site/` alongside the HTML.
+
+Submitted: July 15, 2026. Notification: August 1, 2026.

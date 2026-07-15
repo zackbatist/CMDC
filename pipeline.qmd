@@ -1,40 +1,50 @@
 ---
-title: "Pipeline"
+title: "Data Sources, Model, and Pipeline"
+subtitle: "Technical detail supporting the submitted proposal"
 ---
 
-One shared pipeline runs across all four sources, rather than a separate process per source. Each source differs only in its retrieval step; everything after that is identical.
+This page expands on the methodology summarized in the [proposal](proposal.qmd). It covers the two data sources the pipeline draws on, the two-phase construction process, and the resulting data model.
 
-## Retrieval
+## Data sources
 
-Each source is queried in its own way, since each has a different access mechanism:
+The pipeline draws on two sources to build the initial dataset.
 
-- **OpenAlex**: API query filtered by Canadian institution and metascience-specific topic ID, as described in [Data Sources](data-sources.qmd). Where `has_fulltext` is true, the open-access PDF is retrieved.
-- **Funding databases**: bulk data download where available, or the funder's own search interface, queried against the same bilingual term list.
-- **Journals**: direct search of each venue for metascience-related content.
-- **Research Data Canada / Digital Research Alliance**: their published working-group listings, fetched directly.
+**Funding records** released by federal and provincial funding agencies. These include project titles, plain-language summaries, names of principal investigators and institutional hosts, and partner organizations. Funding records are the primary way an initiative first enters the dataset, since a funded project is identifiable independent of whether it has produced any publications yet.
 
-The output of this step, regardless of source, is a body of text: an acknowledgements section, a funding record's title and description, an article's content, a listing page's text.
+**OpenAlex**, queried in two ways: by a set of metaresearch-related topic IDs drawn from OpenAlex's own topic taxonomy, and by authors' Canadian affiliations. Where a matching work has full text available, it is processed with [GROBID](https://grobid.readthedocs.io/), an open-source tool for parsing structured data from research articles, to extract information typically found in acknowledgements and funding disclosure sections: funding sources and relationships with umbrella organizations that supported the work.
 
-## Extraction
+## Two-phase construction
 
-Every piece of retrieved text is passed through the same fixed prompt, asking whether it names a real, ongoing initiative, distinct from a funder or institution name, and if so, to extract the name and any stated detail about it (people, affiliation, description).
+The directory is constructed in two phases.
 
-For OpenAlex records specifically, full-text PDFs are first processed with GROBID to isolate the acknowledgements section, since that is where an initiative is most likely to be named in a publication that isn't directly about the initiative itself.
+### Phase 1: identification and collection
 
-Each hit is logged as one row: candidate name, source, source URL or citation, date, extracted detail, and the raw source text retained for later verification.
+The first phase identifies, locates, and assembles information describing each initiative, producing a base dataset that is then enriched.
 
-## Deduplication
+Funding records are enriched by locating each initiative's official web pages and appending rosters of connected individuals. In parallel, OpenAlex records are processed as described above.
 
-Because the same initiative can be named in more than one source, candidate names are compared against each other before confirmation: fuzzy string matching on the name itself, plus a check for shared people or institutions already extracted. Matches are merged into a single candidate record rather than confirmed twice under separate log entries.
+Names of individuals and initiatives logged from each source are matched by string similarity and by other identifiers where available (ORCID, email address), and matches are merged into a single record. Records that don't match anything else prompt a manual query to locate additional information.
 
-## Confirmation
+The outcome of this phase is a comprehensive dataset comprising: metaresearch initiatives, the works deriving from them, the people who produced that work, their institutional and disciplinary homes, and the sources from which they obtained financial support.
 
-Each merged candidate is checked against one fixed rule: does it have its own documentation (a website, a repository, a page describing it), or is it independently named in at least two of the four sources. Candidates that pass are marked confirmed and move into the initiative record. Candidates that don't stay on the unconfirmed list, published alongside the dataset rather than discarded.
+### Phase 2: analysis
 
-## Aggregation
+Each record from Phase 1 is explicitly linked to textual resources connected to it, including project web pages and scholarly outputs. The second phase analyzes these materials to determine specific aspects of metascience associated with each initiative.
 
-For each confirmed initiative, the people named in connection with it seed the person layer, cross-checked against ORCID and OpenAlex author identifiers using the same disambiguation approach used in the author's other work reconstructing citation networks (BibVik). Publications connected to a confirmed initiative or its people are retrieved from OpenAlex and Crossref, supplemented by GROBID-extracted metadata where needed, and written into the publication layer.
+Topic modelling and targeted LLM queries are applied to the titles, abstracts, and full texts (where available) of each scholarly output, and to initiatives' own descriptions of their objectives and activities as documented on their websites. Topics derive from how each initiative identifies itself, its methods, and its disciplinary orientation.
 
-## What this pipeline cannot guarantee
+These topics may also be fitted into more established taxonomies, including those of Peterson and Panofsky (2023) and Rubin (2026); these are appended to initiative records as tags and categories, respectively.
 
-This process will not find every Canadian metascience initiative. It is most likely to miss initiatives with no online presence, informal groups that never documented themselves anywhere searchable, and work happening in languages or communities the source list and term list don't reach. The unconfirmed list and a dated register of known gaps are published specifically so this limitation stays visible and addressable over time, rather than implying the dataset is complete.
+## Data model
+
+Phase 1 and Phase 2 together populate three kinds of information, linked to one another:
+
+- **Initiatives** — the anchor record for each identified effort: its name, institutional or funding host, and connected textual resources (web pages, scholarly outputs).
+- **People** — individuals connected to an initiative, drawn from principal investigator and roster information, with institutional and disciplinary affiliations and matched across sources by identifier or string similarity.
+- **Works** — scholarly outputs and other textual resources deriving from an initiative, carrying the tags and categories assigned during Phase 2's topic modelling and taxonomy fitting.
+
+## References
+
+Peterson, David, and Aaron Panofsky. 2023. Metascience as a Scientific Social Movement. *Minerva* 61 (2): 147–74. https://doi.org/10.1007/s11024-023-09490-3.
+
+Rubin, Mark. 2026. Six Types of Metascience. Blog post. *Critical Metascience*, June 17. https://markrubin.substack.com/p/contained-experiments-reproducibility.
