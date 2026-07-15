@@ -2,7 +2,6 @@
 title: "A Directory of Canadian Metaresearch Initiatives"
 subtitle: "Canadian Metaresearch Data Challenge — 2nd Canadian Open Science Conference"
 author: "Zachary Batist, McGill University"
-bibliography: references.bib
 format:
   pdf:
       documentclass: article
@@ -28,7 +27,7 @@ format:
 
 ## Objectives
 
-Metaresearch in Canada spans different banners, including metascience, scientometrics, science and technology studies, and science reform advocacy. Initiatives occur in a variety of institutional contexts, including universities, libraries, granting agencies, and independent community infrastructure projects, and vary in scale, objectives, methods, and disciplinary orientation. This diverse research landscape is undoubtably beneficial to obtaining a well-rounded understanding of science, but no platform currently exists to bridge the work being done across the field.
+Metaresearch in Canada spans different banners, including metascience, scientometrics, science and technology studies, and science reform advocacy. Initiatives occur in a variety of institutional contexts, including universities, libraries, granting agencies, and independent community infrastructure projects, and vary in scale, objectives, methods, and disciplinary orientation. This diverse research landscape is undoubtedly beneficial to obtaining a well-rounded understanding of science, but no platform currently exists to bridge the work being done across the field.
 
 This project, which systematically documents Canadian metaresearch initiatives, including the people who drive the work and the outcomes that emerge from them, is the first effort of its kind. The goal is to produce an original, complete, and authoritative record that supports (1) discovery of like-minded and alternative perspectives to topics of overlapping concern, (2) analysis of how the field has developed and continues to operate and its various forms, and (3) advocacy for enhanced support so that we may continue to pursue our mutual interest in understanding and improving science.
 
@@ -36,20 +35,20 @@ This project, which systematically documents Canadian metaresearch initiatives, 
 
 The core activity for this project is development and implementation of a pipeline to query, record, normalize, de-duplicate, and validate information about metascience initiatives across Canada. This proposal summarizes a more detailed technical account of the data model, sources, and processing pipeline, which is maintained at [zackbatist.info/CMDC](https://zackbatist.info/CMDC). Overall, the pipeline draws on the author's experience building [open-archaeo.info](https://open-archaeo.info/), a comprehensive listing of open source research software in archaeology used to track developments in that field, and his technical experience retrieving and processing aggregated scholarly metadata, which was most significantly applied for the [BibVik](https://zackbatist.info/BibVik/) project.
 
-The directory will be constructed in two phases: (1) identifying, locating and assembling relevant information pertaining to and describing each initiative; and (2) analyzing texts that are either produced by each initiative or that describe their own activities to document relevant facets or characteristics.
+The directory is constructed in two phases: (1) identifying, locating, and assembling relevant information pertaining to and describing each initiative; and (2) analyzing texts that are either produced by each initiative or that describe their own activities to document relevant facets or characteristics.
 
 The initial collection phase relies on funding records released by federal and provincial funding agencies and OpenAlex's index of scholarly works to develop a base dataset that will be subsequently enriched.
-Funding records include project titles, plain-language summaries, names of principal investigators and institutional hosts, and partner organizations. These records will be enhanced by locating official web pages and appending rosters of connected individuals.
-In parallel, OpenAlex will be queried by filtering for a set of metaresearch-related topic IDs obtained from OpenAlex's own topic taxonomy and by authors' Canadian affiliations. When full texts are available, scholarly works will be processed using GROBID, an open-source tool for parsing structured data from research articles, to extract additional information about authors' funding sources and relationships with umbrella organizations that supported the work -- information that is typically available in acknowledgements and funding disclosure sections.
+Funding records include project titles, plain-language summaries, names of principal investigators and institutional hosts, and partner organizations. These records are enhanced by locating official web pages and appending rosters of connected individuals.
+In parallel, OpenAlex is queried by filtering for a set of metaresearch-related topic IDs obtained from OpenAlex's own topic taxonomy and by authors' Canadian affiliations. When full texts are available, scholarly works are processed using GROBID, an open-source tool for parsing structured data from research articles, to extract additional information about authors' funding sources and relationships with umbrella organizations that supported the work — information that is typically available in acknowledgements and funding disclosure sections.
 Names of individuals and initiatives logged from each data source are matched by string similarity and use of other matching identifiers (e.g., ORCID, email address), and matches are merged into a single record.
-Unmatched records will prompt manual query to locate additional information about those initiatives and their activities.
+Unmatched records prompt manual query to locate additional information about those initiatives and their activities.
 The outcome of the first phase is a comprehensive dataset comprising information about metaresearch initiatives, works deriving from those initiatives, the people who produced the work, their institutional and disciplinary homes, and the sources from which they obtained financial support.
 
-Each record will also be explicitly linked to textual resources, including project web pages and scholarly outputs, and the second phase will analyze these materials to determine specific aspects of metascience associated with each initiative.
-Topic modelling and targeted LLM queries will be applied to the titles, abstracts and full texts (when available) of each scholarly output and to descriptions of initiatives' objectives and activities that are documented on their own websites.
-Topics will therefore derive from how each initiative identifies itself, its methods and its disciplinary orientation, and topics may also be fitted into more authoritative taxonomies such as those produced by Peterson and Panofsky (2023) and by Rubin (2026); these will be appended to initiative records as tags and categories, respectively.
+Each record is also explicitly linked to textual resources, including project web pages and scholarly outputs, and the second phase analyzes these materials to determine specific aspects of metascience associated with each initiative.
+Topic modelling and targeted LLM queries are applied to the titles, abstracts and full texts (when available) of each scholarly output and to descriptions of initiatives' objectives and activities that are documented on their own websites.
+Topics therefore derive from how each initiative identifies itself, its methods, and its disciplinary orientation, and topics may also be fitted into more authoritative taxonomies such as those produced by Peterson and Panofsky (2023) and by Rubin (2026); these are appended to initiative records as tags and categories, respectively.
 
-The author will then be analyze the dataset to uncover tendencies across the Canadian metaresearch landscape, similarly to his work using open-archaeo to map collaborations in the research software development ecosystem (Batist and Roe 2024). This will be published in the Journal of Research on Research.
+The author will then analyze the dataset to uncover tendencies across the Canadian metaresearch landscape, similarly to his work using open-archaeo to map collaborations in the research software development ecosystem (Batist and Roe 2024). This will be published in the Journal of Research on Research.
 
 ## Anticipated Applications and Impact
 
@@ -59,13 +58,13 @@ Additionally, funders and advocacy organizations, such as CaRN/RECAR or the Tane
 
 ## Openness, Transparency, and Reproducibility
 
-All code, documentation and analysis are published as versioned, dated, plain text artifacts in a public repository and is released under an open license. This includes the retrieval queries, inclusion and exclusion criteria, bilingual key term list, disambiguation procedures, and tag-vocabulary mapping, alongside the retrieval, enrichment, and analysis code itself. This ensures that the full pipeline can be reused or audited by any third party. Contact information collected during disambiguation is used only to distinguish people who share a name and is stripped before publication; it never appears in the public release.
+All code, documentation, and analysis are published as versioned, dated, plain text artifacts in a public repository and released under an open license. This includes the retrieval queries, inclusion and exclusion criteria, bilingual key term list, disambiguation procedures, and tag-vocabulary mapping, alongside the retrieval, enrichment, and analysis code itself. This ensures that the full pipeline can be reused or audited by any third party. Contact information collected during disambiguation is used only to distinguish people who share a name and is stripped before publication; it never appears in the public release.
 
 ## Feasibility and Work Plan
 
 Assuming notification of results on August 1 against an October 27 conference date, roughly twelve weeks are available. The core deliverable is initiative discovery and deduplication, which the author has extensive experience with from his work on the BibVik project. The main technical risk is the extraction of data released by funding agencies, which depends on how consistently that source is structured.
 
-Initiative discovery and deduplication across the two sources (weeks 1 through 6) are the largest share of the work and the deliverable's primary focus. Additional capture of people and publications named in each initiative's own source material (weeks 6 through 8) follows directly from the initiative discover layer. Validation of coverage (weeks 8 through 10) depends on the first two phases being substantially complete. Public release, documentation and preliminary analysis (weeks 10 through 12) depend on validation being complete. A more comprehensive analysis worthy of a peer-reviewed article will incorporate feedback received during the conference.
+Initiative discovery and deduplication across the two sources (weeks 1 through 6) are the largest share of the work and the deliverable's primary focus. Additional capture of people and publications named in each initiative's own source material (weeks 6 through 8) follows directly from the initiative discovery layer. Validation of coverage (weeks 8 through 10) depends on the first two phases being substantially complete. Public release, documentation and preliminary analysis (weeks 10 through 12) depend on validation being complete. A more comprehensive analysis worthy of a peer-reviewed article will incorporate feedback received during the conference.
 
 ## References
 
