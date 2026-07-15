@@ -2,6 +2,8 @@ project:
   type: website
   output-dir: _site
 
+bibliography: assets/CMDC.bib
+csl: assets/chicago-author-date.csl
 website:
   title: "Canadian Metaresearch Data Challenge"
   sidebar:
@@ -21,17 +23,18 @@ format:
     css: assets/styles.css
     toc: false
     grid:
-      body-width: 1000px
-      margin-width: 350px
+      body-width: 1100px
+      margin-width: 200px
     include-in-header:
       - text: |
           <style type="text/css">
           h1.hide {
             display: none;
           }
+          #quarto-document-content {
+              text-align: justify;
+            }
+            .abstract {
+              text-align: justify;
+            }
           </style>
-  # pdf:
-  #   documentclass: article
-  #   geometry: margin=1in
-  #   fontsize: 11pt
-  #   toc: false

@@ -3,6 +3,7 @@ title: "A Directory of Canadian Metaresearch Initiatives"
 subtitle: "Canadian Metaresearch Data Challenge — 2nd Canadian Open Science Conference"
 author: "Zachary Batist, McGill University"
 format:
+  html: default
   pdf:
       documentclass: article
       geometry: margin=0.75in
@@ -46,9 +47,9 @@ The outcome of the first phase is a comprehensive dataset comprising information
 
 Each record is also explicitly linked to textual resources, including project web pages and scholarly outputs, and the second phase analyzes these materials to determine specific aspects of metascience associated with each initiative.
 Topic modelling and targeted LLM queries are applied to the titles, abstracts and full texts (when available) of each scholarly output and to descriptions of initiatives' objectives and activities that are documented on their own websites.
-Topics therefore derive from how each initiative identifies itself, its methods, and its disciplinary orientation, and topics may also be fitted into more authoritative taxonomies such as those produced by Peterson and Panofsky (2023) and by Rubin (2026); these are appended to initiative records as tags and categories, respectively.
+Topics therefore derive from how each initiative identifies itself, its methods, and its disciplinary orientation, and topics may also be fitted into more authoritative taxonomies such as those produced by @peterson2023 and @rubin2026; these are appended to initiative records as tags and categories, respectively.
 
-The author will then analyze the dataset to uncover tendencies across the Canadian metaresearch landscape, similarly to his work using open-archaeo to map collaborations in the research software development ecosystem (Batist and Roe 2024). This will be published in the Journal of Research on Research.
+The author will then analyze the dataset to uncover tendencies across the Canadian metaresearch landscape, similarly to his work using open-archaeo to map collaborations in the research software development ecosystem [@batist2024]. This will be published in the Journal of Research on Research.
 
 ## Anticipated Applications and Impact
 
@@ -67,9 +68,3 @@ Assuming notification of results on August 1 against an October 27 conference da
 Initiative discovery and deduplication across the two sources (weeks 1 through 6) are the largest share of the work and the deliverable's primary focus. Additional capture of people and publications named in each initiative's own source material (weeks 6 through 8) follows directly from the initiative discovery layer. Validation of coverage (weeks 8 through 10) depends on the first two phases being substantially complete. Public release, documentation and preliminary analysis (weeks 10 through 12) depend on validation being complete. A more comprehensive analysis worthy of a peer-reviewed article will incorporate feedback received during the conference.
 
 ## References
-
-Batist, Zachary, and Joe Roe. 2024. Open Archaeology, Open Source? Collaborative Practices in an Emerging Community of Archaeological Software Engineers. _Internet Archaeology_ 67. https://doi.org/10.11141/ia.67.13.
-
-Peterson, David, and Aaron Panofsky. 2023. Metascience as a Scientific Social Movement. _Minerva_ 61 (2): 147–74. https://doi.org/10.1007/s11024-023-09490-3.
-
-Rubin, Mark. 2026. Six Types of Metascience. Blog post. _Critical Metascience_, June 17. https://markrubin.substack.com/p/contained-experiments-reproducibility.
