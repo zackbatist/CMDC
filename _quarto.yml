@@ -1,14 +1,22 @@
 project:
   type: website
   output-dir: _site
+  preview:
+    port: 7777
+    browser: false
 
 bibliography: assets/CMDC.bib
 csl: assets/chicago-author-date.csl
+number-sections: false
+
 website:
   title: "Canadian Metaresearch Data Challenge"
   sidebar:
     style: docked
     search: false
+    collapse-level: 2
+    pinned: true
+    align: center
     contents:
       - href: index.qmd
         text: Overview
@@ -16,6 +24,17 @@ website:
         text: Proposal
       - href: pipeline.qmd
         text: Data Sources, Model, and Pipeline
+  site-url: https://zackbatist.info/CMDC/
+  repo-url: https://github.com/zackbatist/CMDC
+  repo-actions: none
+  bread-crumbs: true
+  page-navigation: false
+  back-to-top-navigation: false
+  page-footer:
+    right: "This page is built with ❤️ and [Quarto](https://quarto.org/)."
+    left:
+      - text: "CC0"
+        href: https://creativecommons.org/publicdomain/zero/1.0/
 
 format:
   html:
